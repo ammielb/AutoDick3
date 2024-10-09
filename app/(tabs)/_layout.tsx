@@ -4,11 +4,14 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { NavBar } from '@/components/navigation/NavBar';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+
+    // <NavBar></NavBar>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
