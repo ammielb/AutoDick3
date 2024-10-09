@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+[
+  <style
+    dangerouslySetInnerHTML={
+      {
+        "__html": ".css-1t5qtl8{-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;height:100px;}",
+      }
+    }
+    data-emotion="css 1t5qtl8"
+  />,
+  <div
+    className="MuiBox-root css-1t5qtl8"
+  >
+    <style
+      dangerouslySetInnerHTML={
+        {
+          "__html": ".css-177lm4r-MuiAppBar-root{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:100%;box-sizing:border-box;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;position:relative;--AppBar-background:#1976d2;--AppBar-color:#fff;background-color:var(--AppBar-background);color:var(--AppBar-color);}",
+        }
+      }
+      data-emotion="css 177lm4r-MuiAppBar-root"
+    />
+    <style
+      dangerouslySetInnerHTML={
+        {
+          "__html": ".css-fdxeqp-MuiPaper-root-MuiAppBar-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:100%;box-sizing:border-box;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;position:relative;--AppBar-background:#1976d2;--AppBar-color:#fff;background-color:var(--AppBar-background);color:var(--AppBar-color);}",
+        }
+      }
+      data-emotion="css fdxeqp-MuiPaper-root-MuiAppBar-root"
+    />
+    <header
+      className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionRelative css-fdxeqp-MuiPaper-root-MuiAppBar-root"
+      style={
+        {
+          "--Paper-shadow": "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+        }
+      }
+    >
+      <style
+        dangerouslySetInnerHTML={
+          {
+            "__html": ".css-95f9g5-MuiToolbar-root{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-left:16px;padding-right:16px;min-height:56px;}@media (min-width:600px){.css-95f9g5-MuiToolbar-root{padding-left:24px;padding-right:24px;}}@media (min-width:0px){@media (orientation: landscape){.css-95f9g5-MuiToolbar-root{min-height:48px;}}}@media (min-width:600px){.css-95f9g5-MuiToolbar-root{min-height:64px;}}",
+          }
+        }
+        data-emotion="css 95f9g5-MuiToolbar-root"
+      />
+      <div
+        className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-95f9g5-MuiToolbar-root"
+      >
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-1jffvj-MuiTypography-root{margin:0;font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:500;font-size:1.25rem;line-height:1.6;letter-spacing:0.0075em;text-align:var(--Typography-textAlign);-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;}",
+            }
+          }
+          data-emotion="css 1jffvj-MuiTypography-root"
+        />
+        <div
+          className="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft css-1jffvj-MuiTypography-root"
+          style={
+            {
+              "--Typography-textAlign": "left",
+            }
+          }
+        >
+          huidige tijd
+        </div>
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-olrgf0-MuiDivider-root{margin:0;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;border-width:0;border-style:solid;border-color:rgba(0, 0, 0, 0.12);border-bottom-width:thin;height:100%;border-bottom-width:0;border-right-width:thin;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;height:auto;}",
+            }
+          }
+          data-emotion="css olrgf0-MuiDivider-root"
+        />
+        <div
+          aria-orientation="vertical"
+          className="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem css-olrgf0-MuiDivider-root"
+          role="separator"
+        />
+        <div
+          className="MuiTypography-root MuiTypography-h6 MuiTypography-alignCenter css-1jffvj-MuiTypography-root"
+          style={
+            {
+              "--Typography-textAlign": "center",
+            }
+          }
+        >
+          Home
+        </div>
+        <div
+          aria-orientation="vertical"
+          className="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem css-olrgf0-MuiDivider-root"
+          role="separator"
+        />
+        <div
+          className="MuiTypography-root MuiTypography-h6 MuiTypography-alignRight css-1jffvj-MuiTypography-root"
+          style={
+            {
+              "--Typography-textAlign": "right",
+            }
+          }
+        >
+          go to presets
+        </div>
+      </div>
+    </header>
+  </div>,
+]
+`;

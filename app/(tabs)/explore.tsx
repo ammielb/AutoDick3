@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
@@ -26,8 +27,19 @@ const Timer = () => {
     setIsActive(false);
     setSeconds(10);
   };
+=======
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { StyleSheet, Image, Platform } from 'react-native';
+import {NavBar } from '@/components/navigation/NavBar';
+import { Collapsible } from '@/components/default/Collapsible';
+import { ExternalLink } from '@/components/default/ExternalLink';
+import ParallaxScrollView from '@/components/default/ParallaxScrollView';
+import { ThemedText } from '@/components/default/ThemedText';
+import { ThemedView } from '@/components/default/ThemedView';
+>>>>>>> 533c3f6 (added NavBar and test Suite for NavBar also put the components you get when starting in a diffrent folder)
 
   return (
+<<<<<<< HEAD
     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
       <Text variant="headlineMedium">Timer: {seconds}s</Text>
       <Button mode="contained" onPress={() => setIsActive(!isActive)}>
@@ -37,6 +49,14 @@ const Timer = () => {
         Reset
       </Button>
     </View>
+=======
+
+      <div>
+        <NavBar/>
+      </div >
+        
+    
+>>>>>>> 533c3f6 (added NavBar and test Suite for NavBar also put the components you get when starting in a diffrent folder)
   );
 };
 
