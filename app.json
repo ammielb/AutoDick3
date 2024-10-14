@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AutoDick3",
-    "slug": "AutoDick3",
+    "slug": "autodick3",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -31,6 +31,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a9db2a10-82a4-43a9-bbdc-87c5905e8064"
+      }
+    },
+    "owner": "1082102"
   }
 }
