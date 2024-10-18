@@ -1,38 +1,30 @@
 
-import {AppBar} from '@mui/material/'; 
-import {Toolbar} from '@mui/material/'; 
-import {Box} from '@mui/material/'; 
-// import { ThemedText } from '@/components/ThemedText';
-import {NavBar } from '@/components/navigation/NavBar';
-
-import { StyleSheet, Platform } from 'react-native';
-
+import React from 'react';
+import { useRouter } from 'expo-router';
+import { Appbar, Button } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 export default function HomeScreen() {
-  return (
-    <div>
-      <NavBar/>
+  const router = useRouter();
+  const [currTime, setCurrTime] = React.useState(new Date().toLocaleTimeString());
 
+  // useEffect to update the time every second
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrTime(new Date().toLocaleTimeString());
+    }, 1000); // update every 1 second
+
+    return () => clearInterval(interval); // cleanup interval on component unmount
+  }, []);
+  return (
+    
+    <Appbar.Header mode='small'>
+      <Appbar.Content title="AutoDick" />
+      <Text style={{ color: 'black', marginLeft: 8,  justifyContent: 'center' }}>{currTime}</Text>
+      <Button mode="contained" onPress={() => router.push('./Presets') } style={{ marginLeft: 16, marginRight: 16}}>Presets</Button>
+      {/* <Button mode="contained" buttonColor='blue'  onPress={() =>  router.push('index')} style={{ marginLeft: 16}}> Home</Button> */}
       
-    </div>
+    </Appbar.Header>
+
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
