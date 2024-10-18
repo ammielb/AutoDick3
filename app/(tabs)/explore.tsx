@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Image, Platform } from 'react-native';
-import {NavBar } from '@/components/navigation/NavBar';
+import {NavBar } from '@/components/NavBar';
 import { Collapsible } from '@/components/default/Collapsible';
 import { ExternalLink } from '@/components/default/ExternalLink';
 import ParallaxScrollView from '@/components/default/ParallaxScrollView';
