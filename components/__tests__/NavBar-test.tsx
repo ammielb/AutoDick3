@@ -1,10 +1,11 @@
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 
-import { ThemedText } from '../default/ThemedText';
+import { NavBar} from '../navigation/NavBar';
 
 it(`renders correctly`, () => {
-  const tree = renderer.create(<ThemedText>Snapshot test!</ThemedText>).toJSON();
+  const tree = renderer.create(<NavBar/>).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
+

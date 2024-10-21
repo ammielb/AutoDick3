@@ -1,32 +1,42 @@
 import * as React from 'react';
+
+
+
+import { Divider } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
 
-export default function ButtonAppBar() {
+export function NavBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <Box sx={{ 
+        flexGrow: 1,
+        height:100
+      
+      }}>
+    <AppBar 
+        position="relative"
+        // color="primary"
+    >
+      <Toolbar>
+      <Typography variant="h6" component="div" align='left' sx={{ flexGrow: 1 }}>
+              huidige tijd
+            </Typography>
+
+        <Divider orientation='vertical' flexItem/>
+
+            <Typography variant="h6" component="div" align='center' sx={{ flexGrow: 1 }}>
+              Home
+            </Typography>
+
+        <Divider orientation='vertical' flexItem/>
+
+            <Typography variant="h6" component="div" align='right' sx={{ flexGrow: 1 }}>
+                go to presets
+            </Typography>
+      </Toolbar>
+    </AppBar>
+  </Box>
   );
 }
