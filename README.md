@@ -48,3 +48,22 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## if you want to change the admin account.
+1. in app.json and eas.json. change the owner to the new owner account.
+2. in app.json. change the project id to the new owners account ID. in their expo.dev account.
+
+## tutorial to turn this project into a APK
+https://www.youtube.com/watch?v=3j9DcRCxrFg

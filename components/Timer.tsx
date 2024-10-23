@@ -1,100 +1,85 @@
-
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-
-import { TouchableOpacity } from 'react-native';
-import { State } from 'react-native-gesture-handler';
-
-import { TextInput } from 'react-native-paper';
-
+import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
+import { Card } from 'react-native-paper';
 
 export type Props = {
-    timeSet: number;
+  timeSet: number;
+};
 
-  };
-
-  // interface State  {
-  //   time:number
-  // }
-  // let state  : State= {
-  //   time: 0,
-  // }
-const  Timer : React.FC<Props> = ({timeSet})=>{
-  const [time, setTime] = useState<number>(timeSet);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    // Cleanup on component unmount
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
+const Timer: React.FC<Props> = ({ timeSet }) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0); // time  to reset the timer
 
   const startTimer = () => {
-    if (!isRunning) {
-      setIsRunning(true);
-      timerRef.current = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-    }
+    setIsPlaying(true);
   };
 
-  const stopTimer = () => {
-    if (isRunning && timerRef.current) {
-      clearInterval(timerRef.current);
-      setIsRunning(false);
-    }
+  const pauseTimer = () => {
+    setIsPlaying(false);
   };
 
   const resetTimer = () => {
-    stopTimer();
-    setTime(0);
+    setIsPlaying(false);
+   setTime((prevTime) => prevTime + 1); // Change the time to reset the timer
   };
 
 
+  const formatTime = (remainingTime: number) => {
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds =remainingTime % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
 
 
+  const displayTime = (displayedText:TimeProps) => {
+    return (
+      <Text
+        accessibilityRole="timer"
+        accessibilityLiveRegion="assertive"
+        importantForAccessibility="yes"
+        style={styles.timeText}
+      >
+        {formatTime(displayedText.remainingTime)}
+      </Text>
+    );
+  };
 
 
-
-
-    
-
-
-
-    
-     
-  
-  
-  
-   
+  //  the actual HTML of the component
+  return (
+    <Card style={styles.container}>
+      <Card.Content>
+      <CountdownCircleTimer
+        key={time} // Key changes will reset the timer
+        duration={timeSet}
+        colors="#0000ff"
+        updateInterval={1}
+        isPlaying={isPlaying}
+      >
+        {displayTime }
+      </CountdownCircleTimer>
+      </Card.Content>
       
-
-        return (
-          <View style={styles.container}>
-          <Text style={styles.timeText}>{formatTime(time)}</Text>
-          <View style={styles.buttonContainer}>
-            <Button title={'Start'} onPress={startTimer} />
-            <Button title={'Stop' } onPress={ stopTimer } />
-            <Button title="Reset" onPress={resetTimer} />
-          </View>
+      <Card.Actions >
+        <View style={styles.buttonContainer}>
+        <Button title="Start" onPress={startTimer} />
+        <Button title="Pause" onPress={pauseTimer} />
+        <Button title="Reset" onPress={resetTimer} />
         </View>
-        );
-}
-const formatTime = (time: number): string => {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      </Card.Actions>
+    </Card>
+  );
 };
+
 const styles = StyleSheet.create({
   container: {
+    marginTop: 25,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    // width:'80%'
   },
   timeText: {
     fontSize: 48,
@@ -102,11 +87,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '60%',
+    marginTop: 25,
+    display: 'flex',
+    flexDirection:"row",
+    justifyContent: 'space-between',
+    width: '100%',
   },
 });
-
 
 export default Timer;

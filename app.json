@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "AutoDick3",
+    "owner": "ammielb",
     "slug": "autodick3",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ammielb.autodick3"
     },
     "web": {
       "bundler": "metro",
@@ -34,9 +36,8 @@
     },
     "extra": {
       "eas": {
-        "projectId": "a9db2a10-82a4-43a9-bbdc-87c5905e8064"
+        "projectId": "cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
       }
-    },
-    "owner": "1082102"
+    }
   }
 }
