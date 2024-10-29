@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'expo-router';
 import { Appbar, Button, Text } from 'react-native-paper';
 import { View } from 'react-native'; // Add a wrapper for the return content
+import Timer from '@/components/Timer';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -29,8 +30,9 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
-      
-      <Text variant="headlineMedium" style={{textAlign: 'center'}}>Timer: {currTime}</Text>
+      <div>
+        <Timer timeSet={133} />
+      </div>
     </View>
   );
 }
