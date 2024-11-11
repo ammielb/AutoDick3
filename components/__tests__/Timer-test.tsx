@@ -1,10 +1,10 @@
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 
-import { NavBar} from '../NavBar';
+import { Timer} from '../Timer';
 
 it(`renders correctly`, () => {
-  const tree = renderer.create(<NavBar/>).toJSON();
+  const tree = renderer.create(   <Timer timeSet={133}></Timer>).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

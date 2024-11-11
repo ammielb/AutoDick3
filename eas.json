@@ -1,0 +1,31 @@
+{
+  "cli": {
+    "version": ">= 12.5.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_APP_OWNER": "ammielb"
+      }
+    },
+    "preview": {
+      "android":{
+        "buildType": "apk",
+      },
+      "distribution": "internal",
+      "channel": "preview"
+    },
+    "production": {
+      "env": {
+        "EXPO_APP_OWNER": "ammielb"
+      },
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
