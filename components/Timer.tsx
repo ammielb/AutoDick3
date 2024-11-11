@@ -10,9 +10,12 @@ export type Props = {
 
 const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0); // key to reset the timer
+  const [time, setTime] = useState<number>(0); // Key to reset the timer
   const [duration, setDuration] = useState<number>(initialTime); // Start with initial time
-  const remainingTime = initialTime;
+  const [typeFlag, setTypeFlag] = useState<string>("Papa weg");
+  const [nextTypeFlag, setNextTypeFlag] = useState<string>("Mama ook weg");
+  const [label, setLabel] = useState<string>("Now: " + typeFlag);
+  const [flag, nextFlag] = useState<string>("Next: " + nextTypeFlag);
   
 
   const startTimer = () => {
@@ -27,6 +30,13 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(initialTime); // Reset to initial time
+    setLabel("Now: " + typeFlag);
+    nextFlag("Next: flag 2");
+  };
+
+  const add5min = () => {
+    setDuration((prevDuration) => prevDuration + 300); // Add 5 minutes (300 seconds)
+    setTime((prevTime) => prevTime + 1); // Reset key to apply new duration
   };
 
   const formatTime = (remainingTime: number) => {
@@ -52,10 +62,14 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
     if (duration === initialTime) {
       // Switch to the next duration after the initial timer completes
       setDuration(nextTime);
+      setLabel("Now: flag 2");
+      nextFlag("Next: no more flag");
       setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
     } else {
       // Reset back to the initial duration if needed, or stop
       setIsPlaying(false); // Stops the timer after completing the second duration
+      setLabel("Now: no flag");
+      nextFlag(" ");
     }
     return { shouldRepeat: false };
   };
@@ -63,6 +77,8 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
   return (
     <Card style={styles.container}>
       <Card.Content>
+        <Text style={styles.labelText}>{label}</Text>
+        <Text style={styles.flagText}>{flag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}
@@ -71,6 +87,7 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
           isPlaying={isPlaying}
           onComplete={handleComplete} // Switch to the next duration on complete
         >
+          
           {displayTime}
         </CountdownCircleTimer>
       </Card.Content>
@@ -79,7 +96,8 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
         <View style={styles.buttonContainer}>
           <Button title="Start" onPress={startTimer} />
           <Button title="Pause" onPress={pauseTimer} />
-          <Button title="Reset" onPress={resetTimer} />
+          <Button title="Add 5 min" onPress={add5min} />
+          <Button title="reset" onPress={resetTimer} />
         </View>
       </Card.Actions>
     </Card>
@@ -105,6 +123,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  labelText: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  flagText: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 10
   },
 });
 
