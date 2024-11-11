@@ -4,12 +4,16 @@ import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-t
 import { Card } from 'react-native-paper';
 
 export type Props = {
-  timeSet: number;
+  initialTime: number;
+  nextTime: number;
 };
 
-const Timer: React.FC<Props> = ({ timeSet }) => {
+const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0); // time  to reset the timer
+  const [time, setTime] = useState<number>(0); // key to reset the timer
+  const [duration, setDuration] = useState<number>(initialTime); // Start with initial time
+  const remainingTime = initialTime;
+  
 
   const startTimer = () => {
     setIsPlaying(true);
@@ -21,18 +25,17 @@ const Timer: React.FC<Props> = ({ timeSet }) => {
 
   const resetTimer = () => {
     setIsPlaying(false);
-   setTime((prevTime) => prevTime + 1); // Change the time to reset the timer
+    setTime((prevTime) => prevTime + 1); // Update key to reset timer
+    setDuration(initialTime); // Reset to initial time
   };
-
 
   const formatTime = (remainingTime: number) => {
     const minutes = Math.floor(remainingTime / 60);
-    const seconds =remainingTime % 60;
+    const seconds = remainingTime % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }
+  };
 
-
-  const displayTime = (displayedText:TimeProps) => {
+  const displayTime = (displayedText: TimeProps) => {
     return (
       <Text
         accessibilityRole="timer"
@@ -45,27 +48,38 @@ const Timer: React.FC<Props> = ({ timeSet }) => {
     );
   };
 
+  const handleComplete = () => {
+    if (duration === initialTime) {
+      // Switch to the next duration after the initial timer completes
+      setDuration(nextTime);
+      setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
+    } else {
+      // Reset back to the initial duration if needed, or stop
+      setIsPlaying(false); // Stops the timer after completing the second duration
+    }
+    return { shouldRepeat: false };
+  };
 
-  //  the actual HTML of the component
   return (
     <Card style={styles.container}>
       <Card.Content>
-      <CountdownCircleTimer
-        key={time} // Key changes will reset the timer
-        duration={timeSet}
-        colors="#0000ff"
-        updateInterval={1}
-        isPlaying={isPlaying}
-      >
-        {displayTime }
-      </CountdownCircleTimer>
+        <CountdownCircleTimer
+          key={time} // Key changes reset the timer
+          duration={duration}
+          colors="#0000ff"
+          updateInterval={1}
+          isPlaying={isPlaying}
+          onComplete={handleComplete} // Switch to the next duration on complete
+        >
+          {displayTime}
+        </CountdownCircleTimer>
       </Card.Content>
       
-      <Card.Actions >
+      <Card.Actions>
         <View style={styles.buttonContainer}>
-        <Button title="Start" onPress={startTimer} />
-        <Button title="Pause" onPress={pauseTimer} />
-        <Button title="Reset" onPress={resetTimer} />
+          <Button title="Start" onPress={startTimer} />
+          <Button title="Pause" onPress={pauseTimer} />
+          <Button title="Reset" onPress={resetTimer} />
         </View>
       </Card.Actions>
     </Card>
@@ -79,7 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    // width:'80%'
   },
   timeText: {
     fontSize: 48,
@@ -89,7 +102,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 25,
     display: 'flex',
-    flexDirection:"row",
+    flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
   },

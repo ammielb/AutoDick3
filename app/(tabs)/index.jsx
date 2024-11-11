@@ -30,9 +30,9 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
-      <div>
-        <Timer timeSet={133} />
-      </div>
+        <Timer initialTime={10} nextTime={20}></Timer>
+      
     </View>
+    
   );
 }
