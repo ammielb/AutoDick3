@@ -6,16 +6,17 @@ import { Card } from 'react-native-paper';
 export type Props = {
   initialTime: number;
   nextTime: number;
+  vlaggen: string;
 };
 
-const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
+const Timer: React.FC<Props> = ({ initialTime, nextTime, vlaggen }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
   const [duration, setDuration] = useState<number>(initialTime); // Start with initial time
-  const [typeFlag, setTypeFlag] = useState<string>("Papa weg");
-  const [nextTypeFlag, setNextTypeFlag] = useState<string>("Mama ook weg");
-  const [label, setLabel] = useState<string>("Now: " + typeFlag);
-  const [flag, nextFlag] = useState<string>("Next: " + nextTypeFlag);
+  const [flags] = useState<string>(vlaggen);
+  const [label, setLabel] = useState<string>("Now: " );
+  const [flag, nextFlag] = useState<string>("Next: " );
+  const [timerCounter, setTimerCounter] = useState<number>(1);
   
 
   const startTimer = () => {
@@ -30,8 +31,7 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(initialTime); // Reset to initial time
-    setLabel("Now: " + typeFlag);
-    nextFlag("Next: flag 2");
+    setTimerCounter(0);
   };
 
   const add5min = () => {
@@ -62,8 +62,6 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
     if (duration === initialTime) {
       // Switch to the next duration after the initial timer completes
       setDuration(nextTime);
-      setLabel("Now: flag 2");
-      nextFlag("Next: no more flag");
       setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
     } else {
       // Reset back to the initial duration if needed, or stop
@@ -71,14 +69,22 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime }) => {
       setLabel("Now: no flag");
       nextFlag(" ");
     }
+
+    
+    setTimerCounter((prevCounter) => (prevCounter + 1) % vlaggen.length);
+    
     return { shouldRepeat: false };
   };
+
+
+  const currentFlag = vlaggen[timerCounter];
+  const setnextFlag = vlaggen[timerCounter + 1];
 
   return (
     <Card style={styles.container}>
       <Card.Content>
-        <Text style={styles.labelText}>{label}</Text>
-        <Text style={styles.flagText}>{flag}</Text>
+        <Text style={styles.labelText}>Now: {currentFlag}</Text>
+        <Text style={styles.flagText}>Next: {setnextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}

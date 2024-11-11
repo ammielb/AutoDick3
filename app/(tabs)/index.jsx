@@ -7,6 +7,9 @@ import Timer from '@/components/Timer';
 export default function HomeScreen() {
   const router = useRouter();
   const [currTime, setCurrTime] = React.useState(new Date().toLocaleTimeString());
+  const vlaggen = ["1", "mama", "opa", "ome kees", "baitch"];
+  const vlaggen2 = ["2", "Ome floris", "Boef paperchase", "Boef Hosselen"];
+  let usePreset = localStorage.getItem('vlaggen');
 
   // useEffect to update the time every second
   React.useEffect(() => {
@@ -30,8 +33,9 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
-        <Timer initialTime={10} nextTime={20}></Timer>
-      
+        <Timer initialTime={10} nextTime={20} vlaggen={vlaggen}></Timer>
+
+        
     </View>
     
   );

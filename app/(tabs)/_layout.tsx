@@ -8,10 +8,7 @@ export default function Layout() {
   return (
 
     <Stack
-        initialRouteName="Home"
-        screenOptions={{
-          header: (props) => <NavBar/>,
-        }}>
+       >
       {/* Automatically maps to app/index.jsx */}
       {/* <Stack.Screen name="index" options={{ title: 'index' }} /> */}
 
