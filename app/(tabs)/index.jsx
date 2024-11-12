@@ -3,6 +3,18 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Text } from 'react-native-paper';
 import { View } from 'react-native'; // Add a wrapper for the return content
 import Timer from '@/components/Timer';
+import Presets from '@/components/Timer';
+
+const jsonData = {
+  amountOfFlags: 3,
+  firstFlag: 'papa weg',
+  firstTime: 10,
+  secondFlag: 'mama niet weg',
+  secondTime: 15,
+  thirdFlag: 'opa ligt in het ziekenhuis',
+  thirdTime: 5
+  // name : 'autodick'
+};
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -33,8 +45,8 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
-        <Timer initialTime={10} nextTime={20} vlaggen={vlaggen}></Timer>
-
+        <Timer initialTime={10} nextTime={20} vlaggen={vlaggen2} data={jsonData}></Timer>
+        
         
     </View>
     

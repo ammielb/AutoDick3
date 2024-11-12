@@ -4,19 +4,38 @@ import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-t
 import { Card } from 'react-native-paper';
 
 export type Props = {
-  initialTime: number;
-  nextTime: number;
+  data: {
+    amountOfFlags: number;
+    firstFlag: string;
+    firstTime: number;
+    secondFlag: string;
+    secondTime: number;
+    thirdFlag: string;
+    thirdTime: number;
+  }
   vlaggen: string;
 };
 
-const Timer: React.FC<Props> = ({ initialTime, nextTime, vlaggen }) => {
+const Presets: React.FC<Props> = ({ data }) =>{
+  return(
+    <div>
+      <h1>{data.firstFlag}</h1>
+    </div>
+  );
+}
+
+const Timer: React.FC<Props> = ({ vlaggen, data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
-  const [duration, setDuration] = useState<number>(initialTime); // Start with initial time
+  const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
   const [flags] = useState<string>(vlaggen);
-  const [label, setLabel] = useState<string>("Now: " );
-  const [flag, nextFlag] = useState<string>("Next: " );
+  const [label] = useState<string>("Now: " );
+  const [flag] = useState<string>("Next: " );
   const [timerCounter, setTimerCounter] = useState<number>(1);
+  const [ currentFlag, setCurrentFlag ] = useState<string>(data.firstFlag);
+  const [ nextFlag, setNextFlag] = useState<string>(data.secondFlag);
+  const [timesRun, setTimesRun] = useState<number>(0);
+  const [amountOfFlags] = useState<number>(data.amountOfFlags);
   
 
   const startTimer = () => {
@@ -30,7 +49,7 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime, vlaggen }) => {
   const resetTimer = () => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
-    setDuration(initialTime); // Reset to initial time
+    setDuration(data.firstTime); // Reset to initial time
     setTimerCounter(0);
   };
 
@@ -59,32 +78,37 @@ const Timer: React.FC<Props> = ({ initialTime, nextTime, vlaggen }) => {
   };
 
   const handleComplete = () => {
-    if (duration === initialTime) {
+    if (duration === data.firstTime && amountOfFlags > 1) {
       // Switch to the next duration after the initial timer completes
-      setDuration(nextTime);
+      setTimesRun((prev) => prev +1);
+      setDuration(data.secondTime);
+      setCurrentFlag(data.secondFlag);
+      setNextFlag(data.thirdFlag);
       setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
-    } else {
+    } else if(duration === data.secondTime && amountOfFlags > 2){
       // Reset back to the initial duration if needed, or stop
-      setIsPlaying(false); // Stops the timer after completing the second duration
-      setLabel("Now: no flag");
-      nextFlag(" ");
-    }
+      
+      setCurrentFlag(data.thirdFlag);
+      setNextFlag("None");
+      setDuration(data.thirdTime);
+      setTime((prevTime) => prevTime + 1);
+    }else if(duration === data.thirdTime && amountOfFlags > 3){
 
-    
-    setTimerCounter((prevCounter) => (prevCounter + 1) % vlaggen.length);
+    }else{
+      setIsPlaying(false); // Stops the timer after completing the second duration
+    }
     
     return { shouldRepeat: false };
   };
 
-
-  const currentFlag = vlaggen[timerCounter];
-  const setnextFlag = vlaggen[timerCounter + 1];
+ 
+ 
 
   return (
     <Card style={styles.container}>
       <Card.Content>
         <Text style={styles.labelText}>Now: {currentFlag}</Text>
-        <Text style={styles.flagText}>Next: {setnextFlag}</Text>
+        <Text style={styles.flagText}>Next: {nextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}
