@@ -1,6 +1,7 @@
 /* eslint-disable no-bitwise */
 import { useMemo, useState } from "react";
 import { PermissionsAndroid, Platform } from "react-native";
+import { Buffer } from 'buffer';
 import {
   BleError,
   BleManager,
@@ -32,7 +33,7 @@ function useBLE(): BluetoothLowEnergyApi {
   const [allDevices, setAllDevices] = useState<Device[]>([]);
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
   const [heartRate, setHeartRate] = useState<number>(0);
-
+  const [writeInterval, setWriteInterval] = useState<NodeJS.Timeout | null>(null);
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
@@ -115,17 +116,23 @@ function useBLE(): BluetoothLowEnergyApi {
       }
     });
 
-  const connectToDevice = async (device: Device) => {
-    try {
-      const deviceConnection = await bleManager.connectToDevice(device.id);
-      setConnectedDevice(deviceConnection);
-      await deviceConnection.discoverAllServicesAndCharacteristics();
-      bleManager.stopDeviceScan();
-    //   startStreamingData(deviceConnection);
-    } catch (e) {
-      console.log("FAILED TO CONNECT", e);
-    }
-  };
+    const connectToDevice = async (device: Device) => {
+      try {
+        const deviceConnection = await bleManager.connectToDevice(device.id);
+        setConnectedDevice(deviceConnection);
+        await deviceConnection.discoverAllServicesAndCharacteristics();
+        bleManager.stopDeviceScan();
+        startStreamingData(deviceConnection);
+  
+        // Start sending data repeatedly every 2 seconds
+        const intervalId = setInterval(() => {
+          writeToDevice(deviceConnection, "1");
+        }, 2000); // adjust the interval time as needed
+        setWriteInterval(intervalId);
+      } catch (e) {
+        console.log("FAILED TO CONNECT", e);
+      }
+    };
 
   const disconnectFromDevice = () => {
     if (connectedDevice) {
@@ -162,6 +169,22 @@ function useBLE(): BluetoothLowEnergyApi {
 
     setHeartRate(innerHeartRate);
   };
+  const writeToDevice = async (device: Device, data: string): Promise<void> => {
+    // Encode the data to Base64
+    const base64Data = Buffer.from(data).toString('base64');
+  
+    try {
+      await device.writeCharacteristicWithoutResponseForService(
+        SERVICE_UUID,
+        CHARACTERISTIC_UUID,
+        base64Data
+      );
+      console.log("Data written successfully:", data);
+    } catch (e) {
+      console.log("Write error:", e);
+    }
+  };
+
 
   const startStreamingData = async (device: Device) => {
     if (device) {

@@ -19,10 +19,10 @@ export default function HomeScreen() {
       requestPermissions,
       scanForPeripherals,
       allDevices,
-      // connectToDevice,
-      // connectedDevice,
-      // heartRate,
-      // disconnectFromDevice,
+      connectToDevice,
+      connectedDevice,
+      heartRate,
+      disconnectFromDevice,
     } = useBLE();
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   
@@ -48,20 +48,33 @@ export default function HomeScreen() {
     };
   
   return (
-    <SafeAreaView >
+    <SafeAreaView style={styles.container}>
+      <View style={styles.heartRateTitleWrapper}>
+        {connectedDevice ? (
+          <>
+            {/* <PulseIndicator /> */}
+            <Text style={styles.heartRateTitleText}>Your Heart Rate Is:</Text>
+            <Text style={styles.heartRateText}>{heartRate} bpm</Text>
+          </>
+        ) : (
+          <Text style={styles.heartRateTitleText}>
+            Please Connect to a Heart Rate Monitor
+          </Text>
+        )}
+      </View>
     <Timer timeSet={133}></Timer>
     <TouchableOpacity
-        onPress={ openModal}
-       
+        onPress={connectedDevice ? disconnectFromDevice : openModal}
+        style={styles.ctaButton}
       >
-        <Text >
-          {"Connect"}
+        <Text style={styles.ctaButtonText}>
+          {connectedDevice ? "Disconnect" : "Connect"}
         </Text>
       </TouchableOpacity>
       <DeviceModal
         closeModal={hideModal}
         visible={isModalVisible}
-        connectToPeripheral={() =>{}}
+        connectToPeripheral={connectToDevice}
         devices={allDevices}
       />
     </SafeAreaView>
@@ -88,3 +101,40 @@ export default function HomeScreen() {
 //     justifyContent: 'space-between',
 //     width: '100%',
 //   },
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+  },
+  heartRateTitleWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  heartRateTitleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginHorizontal: 20,
+    color: "black",
+  },
+  heartRateText: {
+    fontSize: 25,
+    marginTop: 15,
+  },
+  ctaButton: {
+    backgroundColor: "#FF6060",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    marginHorizontal: 20,
+    marginBottom: 5,
+    borderRadius: 8,
+  },
+  ctaButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+});
