@@ -1,16 +1,70 @@
 
-import React from 'react';
+import React from "react";
+import { useState } from "react";
 // import StyleSheet from 'react-native';
 import Timer  from '@/components/Timer';
-
-
+import DeviceModal from "@/components/DeviceConnectionModal";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import useBLE from "./useBLE";
+// import { BleManager } from 'react-native-ble-plx';
 export default function HomeScreen() {
 
+    const {
+      requestPermissions,
+      scanForPeripherals,
+      allDevices,
+      // connectToDevice,
+      // connectedDevice,
+      // heartRate,
+      // disconnectFromDevice,
+    } = useBLE();
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  
+    const scanForDevices = async () => {
+      const isPermissionsEnabled = await requestPermissions();
+      // console.log(isPermissionsEnabled);
+      // console.log("asdasdasd");
+      console.log('asdasd')
+      if (isPermissionsEnabled) {
+        console.log('asdasdsadasd')
+        scanForPeripherals();
+        console.log(allDevices);
+      }
+    };
+  
+    const hideModal = () => {
+      setIsModalVisible(false);
+    };
+  
+    const openModal = async () => {
+      scanForDevices();
+      setIsModalVisible(true);
+    };
+  
   return (
-<div>
+    <SafeAreaView >
     <Timer timeSet={133}></Timer>
-
-  </div>
+    <TouchableOpacity
+        onPress={ openModal}
+       
+      >
+        <Text >
+          {"Connect"}
+        </Text>
+      </TouchableOpacity>
+      <DeviceModal
+        closeModal={hideModal}
+        visible={isModalVisible}
+        connectToPeripheral={() =>{}}
+        devices={allDevices}
+      />
+    </SafeAreaView>
   );
 }
 // const styles = StyleSheet.create({
@@ -34,4 +88,3 @@ export default function HomeScreen() {
 //     justifyContent: 'space-between',
 //     width: '100%',
 //   },
-// });
