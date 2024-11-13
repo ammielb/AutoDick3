@@ -13,7 +13,7 @@ export type Props = {
     thirdFlag: string;
     thirdTime: number;
   }
-  vlaggen: string;
+
 };
 
 const Presets: React.FC<Props> = ({ data }) =>{
@@ -24,11 +24,10 @@ const Presets: React.FC<Props> = ({ data }) =>{
   );
 }
 
-const Timer: React.FC<Props> = ({ vlaggen, data }) => {
+const Timer: React.FC<Props> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
   const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
-  const [flags] = useState<string>(vlaggen);
   const [label] = useState<string>("Now: " );
   const [flag] = useState<string>("Next: " );
   const [timerCounter, setTimerCounter] = useState<number>(1);
@@ -50,6 +49,8 @@ const Timer: React.FC<Props> = ({ vlaggen, data }) => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(data.firstTime); // Reset to initial time
+    setCurrentFlag(data.firstFlag);
+    setNextFlag(data.secondFlag);
     setTimerCounter(0);
   };
 
@@ -78,25 +79,63 @@ const Timer: React.FC<Props> = ({ vlaggen, data }) => {
   };
 
   const handleComplete = () => {
-    if (duration === data.firstTime && amountOfFlags > 1) {
-      // Switch to the next duration after the initial timer completes
+    console.log("komt voor de if statement");
+    console.log(timesRun);
+    if(timesRun < amountOfFlags){
+      console.log("komt in if statement");
+      switch(timesRun){
+        case 0:
+          console.log("komt in case 0");
+          setCurrentFlag(data.secondFlag);
+          setNextFlag(data.thirdFlag);
+          setDuration(data.secondTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 1:
+          console.log("case 1");
+          setCurrentFlag(data.thirdFlag);
+          setNextFlag("None");
+          setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 2:
+          console.log("case 2");
+          setCurrentFlag("klaar");
+          setNextFlag(" ");
+          setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 3:
+          console.log("case 3");
+          setCurrentFlag("te vaak");
+          break;
+        default:
+          console.log("defualt");
+          break;
+      }
+      console.log("komt uit case");
       setTimesRun((prev) => prev +1);
-      setDuration(data.secondTime);
-      setCurrentFlag(data.secondFlag);
-      setNextFlag(data.thirdFlag);
-      setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
-    } else if(duration === data.secondTime && amountOfFlags > 2){
-      // Reset back to the initial duration if needed, or stop
-      
-      setCurrentFlag(data.thirdFlag);
-      setNextFlag("None");
-      setDuration(data.thirdTime);
-      setTime((prevTime) => prevTime + 1);
-    }else if(duration === data.thirdTime && amountOfFlags > 3){
-
-    }else{
-      setIsPlaying(false); // Stops the timer after completing the second duration
+      return{ shouldRepeat: true};
     }
+    // if (duration === data.firstTime && amountOfFlags > 1) {
+    //   // Switch to the next duration after the initial timer completes
+    //   
+    //   setDuration(data.secondTime);
+    //   setCurrentFlag(data.secondFlag);
+    //   setNextFlag(data.thirdFlag);
+    //   setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
+    // } else if(duration === data.secondTime && amountOfFlags > 2){
+    //   // Reset back to the initial duration if needed, or stop
+      
+    //   setCurrentFlag(data.thirdFlag);
+    //   setNextFlag("None");
+    //   setDuration(data.thirdTime);
+    //   setTime((prevTime) => prevTime + 1);
+    // }else if(duration === data.thirdTime && amountOfFlags > 3){
+
+    // }else{
+    //   setIsPlaying(false); // Stops the timer after completing the second duration
+    // }
     
     return { shouldRepeat: false };
   };

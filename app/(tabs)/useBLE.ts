@@ -147,28 +147,29 @@ function useBLE(): BluetoothLowEnergyApi {
     characteristic: Characteristic | null
   ) => {
     if (error) {
-      console.log(error);
-      return -1;
-    } else if (!characteristic?.value) {
-      console.log("No Data was recieved");
+      console.error(error);
       return -1;
     }
-
-    const rawData = btoa(characteristic.value);
-    let innerHeartRate: number = -1;
-
-    const firstBitValue: number = Number(rawData) & 0x01;
-
+  
+    if (!characteristic?.value) {
+      console.log("No data was received");
+      return -1;
+    }
+  
+    const rawData = Buffer.from(characteristic.value, 'base64'); // Use Buffer to handle Base64 encoding
+    let heartRateValue: number = -1;
+  
+    const firstBitValue: number = rawData[0] & 0x01;
+  
     if (firstBitValue === 0) {
-      innerHeartRate = rawData[1].charCodeAt(0);
+      heartRateValue = rawData[1];
     } else {
-      innerHeartRate =
-        Number(rawData[1].charCodeAt(0) << 8) +
-        Number(rawData[2].charCodeAt(2));
+      heartRateValue = (rawData[1] << 8) + rawData[2];
     }
-
-    setHeartRate(innerHeartRate);
+  
+    setHeartRate(heartRateValue);
   };
+  
   const writeToDevice = async (device: Device, data: string): Promise<void> => {
     // Encode the data to Base64
     const base64Data = Buffer.from(data).toString('base64');
