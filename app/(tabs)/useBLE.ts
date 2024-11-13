@@ -25,15 +25,15 @@ interface BluetoothLowEnergyApi {
   disconnectFromDevice: () => void;
   connectedDevice: Device | null;
   allDevices: Device[];
-  heartRate: number;
+ writeToDevice: (device: Device, data: string) => Promise<void> 
 }
 
 function useBLE(): BluetoothLowEnergyApi {
   const bleManager = useMemo(() => new BleManager(), []);
   const [allDevices, setAllDevices] = useState<Device[]>([]);
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-  const [heartRate, setHeartRate] = useState<number>(0);
   const [writeInterval, setWriteInterval] = useState<NodeJS.Timeout | null>(null);
+
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
@@ -122,7 +122,7 @@ function useBLE(): BluetoothLowEnergyApi {
         setConnectedDevice(deviceConnection);
         await deviceConnection.discoverAllServicesAndCharacteristics();
         bleManager.stopDeviceScan();
-        startStreamingData(deviceConnection);
+
   
         // Start sending data repeatedly every 2 seconds
         const intervalId = setInterval(() => {
@@ -138,38 +138,10 @@ function useBLE(): BluetoothLowEnergyApi {
     if (connectedDevice) {
       bleManager.cancelDeviceConnection(connectedDevice.id);
       setConnectedDevice(null);
-      setHeartRate(0);
     }
   };
 
-  const onHeartRateUpdate = (
-    error: BleError | null,
-    characteristic: Characteristic | null
-  ) => {
-    if (error) {
-      console.error(error);
-      return -1;
-    }
-  
-    if (!characteristic?.value) {
-      console.log("No data was received");
-      return -1;
-    }
-  
-    const rawData = Buffer.from(characteristic.value, 'base64'); // Use Buffer to handle Base64 encoding
-    let heartRateValue: number = -1;
-  
-    const firstBitValue: number = rawData[0] & 0x01;
-  
-    if (firstBitValue === 0) {
-      heartRateValue = rawData[1];
-    } else {
-      heartRateValue = (rawData[1] << 8) + rawData[2];
-    }
-  
-    setHeartRate(heartRateValue);
-  };
-  
+ 
   const writeToDevice = async (device: Device, data: string): Promise<void> => {
     // Encode the data to Base64
     const base64Data = Buffer.from(data).toString('base64');
@@ -187,17 +159,6 @@ function useBLE(): BluetoothLowEnergyApi {
   };
 
 
-  const startStreamingData = async (device: Device) => {
-    if (device) {
-      device.monitorCharacteristicForService(
-        SERVICE_UUID,
-        CHARACTERISTIC_UUID ,
-        onHeartRateUpdate
-      );
-    } else {
-      console.log("No Device Connected");
-    }
-  };
 
   return {
     scanForPeripherals,
@@ -206,7 +167,7 @@ function useBLE(): BluetoothLowEnergyApi {
     allDevices,
     connectedDevice,
     disconnectFromDevice,
-    heartRate,
+    writeToDevice,
   };
 }
 

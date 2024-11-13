@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Pressable
 } from "react-native";
 import { Device } from "react-native-ble-plx";
 
@@ -32,12 +33,19 @@ const DeviceModalListItem: FC<DeviceModalListItemProps> = (props) => {
   }, [closeModal, connectToPeripheral, item.item]);
 
   return (
+    <div>
+    <Pressable onPress={closeModal}>
+       <Text>close</Text>
+      </Pressable>
     <TouchableOpacity
       onPress={connectAndCloseModal}
       style={modalStyle.ctaButton}
     >
+
+
       <Text style={modalStyle.ctaButtonText}>{item.item.name}</Text>
     </TouchableOpacity>
+    </div>
   );
 };
 

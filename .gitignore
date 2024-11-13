@@ -19,3 +19,36 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+# Android Studio
+*.iml
+.idea
+.gradle
+build/
+captures/
+.externalNativeBuild
+
+# bundle file
+/**/index.android.bundle

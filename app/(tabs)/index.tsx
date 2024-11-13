@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { Appbar, Button, Text } from 'react-native-paper';
+import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import Timer from '@/components/Timer';
 import DeviceModal from '@/components/DeviceConnectionModal';
+import useBLE from './useBLE';
 import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Pressable
 } from 'react-native';
 // import useBLE from './useBLE';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -56,8 +58,8 @@ export default function HomeScreen() {
   //   allDevices,
   //   connectToDevice,
   //   connectedDevice,
-  //   heartRate,
   //   disconnectFromDevice,
+  //   writeToDevice
   // } = useBLE();
 
   // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -100,26 +102,71 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
+      <Divider/>
+      {/* timer */}
       <Timer data={jsonData} />
-      <Button 
+
+      <Divider/>
+      {/*  toeter BZZZZZ */}
+{/* 
+        {connectedDevice  && (
+        <View style={{backgroundColor: 'blue', flex: 0.2}} >
+      
+          <Button 
           mode="contained" 
-          onPress={() => router.replace('./Presets')} 
+          onPress={()=>
+            {
+              try {
+                writeToDevice(connectedDevice, "1");
+              }catch(e){}
+            }
+          } 
           style={{ marginLeft: 16, marginRight: 16 }}
-        > </Button>
-      {/* <TouchableOpacity
+        >
+          send 1
+        </Button>
+
+        <Button 
+          mode="contained" 
+          onPress={()=>
+            {
+              try {
+                writeToDevice(connectedDevice, "1");
+              }catch(e){}
+            }
+          } 
+          style={{ marginLeft: 16, marginRight: 16 }}
+        >
+          send 1
+        </Button>
+          
+    </View>
+  )} */}
+  <Divider/>
+      {/*  bluetooth connection button*/}
+      {/* <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
+          {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
+      </Text>
+       <TouchableOpacity
         onPress={connectedDevice ? disconnectFromDevice : openModal}
         style={styles.ctaButton}
       >
+        
         <Text style={styles.ctaButtonText}>
           {connectedDevice ? "Disconnect" : "Connect"}
         </Text>
       </TouchableOpacity>
+
+      <Pressable onPress={hideModal}>
+        <Text>close</Text>
+      </Pressable>
+
       <DeviceModal
         closeModal={hideModal}
         visible={isModalVisible}
         connectToPeripheral={connectToDevice}
         devices={allDevices}
-      /> */}
+      />  */}
     </View>
   );
 }
