@@ -11,6 +11,8 @@ import {
 // import useBLE from './useBLE';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+
 // Define the structure of jsonData with an interface
 interface JsonData {
   amountOfFlags: number;
@@ -22,62 +24,44 @@ interface JsonData {
   thirdTime: number;
 }
 
+
+
 const jsonData: JsonData = {
   amountOfFlags: 3,
-  firstFlag: 'papa weg',
+  firstFlag: 'preset 1',
   firstTime: 10,
-  secondFlag: 'mama niet weg',
+  secondFlag: 'flag 2',
   secondTime: 15,
-  thirdFlag: 'ome hendrik ligt in het gekkenhuis',
+  thirdFlag: 'flag 3',
   thirdTime: 5,
 };
+
+const preset2 : JsonData ={
+  amountOfFlags: 2,
+  firstFlag: 'preset 2',
+  firstTime: 4,
+  secondFlag: 'flag 2 final flag',
+  secondTime: 6,
+  thirdFlag: 'no third flag',
+  thirdTime: 13,
+}
 
 export default function HomeScreen() {
   const router = useRouter();
   const [currTime, setCurrTime] = useState<string>(new Date().toLocaleTimeString());
-  const [usePreset, setUsePreset] = useState<string | null>(null);
+  const [curText, setCurText] = useState<string>("null");
+  const [currentPreset, setCurrentPreset] = useState<JsonData>(jsonData);
+  const [resetKey, setResetKey] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchPreset = async () => {
-      try {
-        const preset = await AsyncStorage.getItem('vlaggen');
-        if (preset) setUsePreset(preset);
-      } catch (error) {
-        console.error("Failed to fetch preset:", error);
-      }
-    };
-    fetchPreset();
-  }, []);
+  const changeTimer = ()=>{
+    setCurrentPreset((prev)=> (prev === jsonData ? preset2 : jsonData));
+    
+}
+
+const resetTimer = () =>{
+ if(1===1) console.log("true");
+}
   
-  // // Destructure values from useBLE and define types explicitly
-  // const {
-  //   requestPermissions,
-  //   scanForPeripherals,
-  //   allDevices,
-  //   connectToDevice,
-  //   connectedDevice,
-  //   heartRate,
-  //   disconnectFromDevice,
-  // } = useBLE();
-
-  // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  // const scanForDevices = async () => {
-  //   const isPermissionsEnabled = await requestPermissions();
-  //   if (isPermissionsEnabled) {
-  //     scanForPeripherals();
-  //   }
-  // };
-
-  // const hideModal = () => {
-  //   setIsModalVisible(false);
-  // };
-
-  // const openModal = async () => {
-  //   await scanForDevices();
-  //   setIsModalVisible(true);
-  // };
-
   // useEffect to update the time every second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,12 +84,13 @@ export default function HomeScreen() {
           Presets
         </Button>
       </Appbar.Header>
-      <Timer data={jsonData} />
+      <Timer data={currentPreset} />
+      <Text>{curText}</Text>
       <Button 
           mode="contained" 
-          onPress={() => router.replace('./Presets')} 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        > </Button>
+          onPress={() => {changeTimer(); resetTimer()}} 
+          style={{ marginLeft: 16, marginRight: 16, height: 50 }}
+        > change preset</Button>
       {/* <TouchableOpacity
         onPress={connectedDevice ? disconnectFromDevice : openModal}
         style={styles.ctaButton}

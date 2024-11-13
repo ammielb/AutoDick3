@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
 import { Card } from 'react-native-paper';
+import SoundPlayer from 'react-native-sound-player';
+
+
 
 export type Props = {
   data: {
@@ -13,16 +16,9 @@ export type Props = {
     thirdFlag: string;
     thirdTime: number;
   }
-
+  
 };
 
-const Presets: React.FC<Props> = ({ data }) =>{
-  return(
-    <div>
-      <h1>{data.firstFlag}</h1>
-    </div>
-  );
-}
 
 const Timer: React.FC<Props> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -49,10 +45,15 @@ const Timer: React.FC<Props> = ({ data }) => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(data.firstTime); // Reset to initial time
+    setTimesRun(0);
     setCurrentFlag(data.firstFlag);
     setNextFlag(data.secondFlag);
     setTimerCounter(0);
   };
+
+  // useImperativeHandle(ref, () => ({
+  //   resetTimer
+  // }));
 
   const add5min = () => {
     setDuration((prevDuration) => prevDuration + 300); // Add 5 minutes (300 seconds)
@@ -81,29 +82,27 @@ const Timer: React.FC<Props> = ({ data }) => {
   const handleComplete = () => {
     console.log("komt voor de if statement");
     console.log(timesRun);
-    if(timesRun < amountOfFlags){
+    setTimesRun((prev) => prev +1);
+    if(timesRun < amountOfFlags - 1){
       console.log("komt in if statement");
+      console.log(timesRun);
       switch(timesRun){
         case 0:
-          console.log("komt in case 0");
           setCurrentFlag(data.secondFlag);
           setNextFlag(data.thirdFlag);
           setDuration(data.secondTime);
-          setTime((prevTime)=> prevTime +1);
           break;
         case 1:
           console.log("case 1");
           setCurrentFlag(data.thirdFlag);
           setNextFlag("None");
           setDuration(data.thirdTime);
-          setTime((prevTime)=> prevTime +1);
           break;
         case 2:
           console.log("case 2");
           setCurrentFlag("klaar");
           setNextFlag(" ");
           setDuration(data.thirdTime);
-          setTime((prevTime)=> prevTime +1);
           break;
         case 3:
           console.log("case 3");
@@ -114,29 +113,10 @@ const Timer: React.FC<Props> = ({ data }) => {
           break;
       }
       console.log("komt uit case");
-      setTimesRun((prev) => prev +1);
+      console.log(timesRun);
+      setTime((prevtime)=> prevtime + 1);
       return{ shouldRepeat: true};
     }
-    // if (duration === data.firstTime && amountOfFlags > 1) {
-    //   // Switch to the next duration after the initial timer completes
-    //   
-    //   setDuration(data.secondTime);
-    //   setCurrentFlag(data.secondFlag);
-    //   setNextFlag(data.thirdFlag);
-    //   setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
-    // } else if(duration === data.secondTime && amountOfFlags > 2){
-    //   // Reset back to the initial duration if needed, or stop
-      
-    //   setCurrentFlag(data.thirdFlag);
-    //   setNextFlag("None");
-    //   setDuration(data.thirdTime);
-    //   setTime((prevTime) => prevTime + 1);
-    // }else if(duration === data.thirdTime && amountOfFlags > 3){
-
-    // }else{
-    //   setIsPlaying(false); // Stops the timer after completing the second duration
-    // }
-    
     return { shouldRepeat: false };
   };
 
@@ -206,3 +186,4 @@ const styles = StyleSheet.create({
 });
 
 export default Timer;
+// export { resetTimer };
