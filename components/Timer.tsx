@@ -2,7 +2,6 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
 import { Card } from 'react-native-paper';
-import SoundPlayer from 'react-native-sound-player';
 
 
 
@@ -20,7 +19,7 @@ export type Props = {
 };
 
 
-const Timer: React.FC<Props> = ({ data }) => {
+const Timer = forwardRef (({data}: Props, ref) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
   const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
@@ -51,9 +50,9 @@ const Timer: React.FC<Props> = ({ data }) => {
     setTimerCounter(0);
   };
 
-  // useImperativeHandle(ref, () => ({
-  //   resetTimer
-  // }));
+  useImperativeHandle(ref, () => ({
+    resetTimer
+  }));
 
   const add5min = () => {
     setDuration((prevDuration) => prevDuration + 300); // Add 5 minutes (300 seconds)
@@ -151,7 +150,7 @@ const Timer: React.FC<Props> = ({ data }) => {
       </Card.Actions>
     </Card>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -186,4 +185,3 @@ const styles = StyleSheet.create({
 });
 
 export default Timer;
-// export { resetTimer };

@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
+// HomeScreen.tsx
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { Appbar, Button, Text } from 'react-native-paper';
-import Timer from '@/components/Timer';
-import DeviceModal from '@/components/DeviceConnectionModal';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-// import useBLE from './useBLE';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Timer from '@/components/Timer';  // Import Timer component
+import { StyleSheet, View } from 'react-native';
 
-
-
-// Define the structure of jsonData with an interface
 interface JsonData {
   amountOfFlags: number;
   firstFlag: string;
@@ -23,8 +14,6 @@ interface JsonData {
   thirdFlag: string;
   thirdTime: number;
 }
-
-
 
 const jsonData: JsonData = {
   amountOfFlags: 3,
@@ -36,7 +25,7 @@ const jsonData: JsonData = {
   thirdTime: 5,
 };
 
-const preset2 : JsonData ={
+const preset2: JsonData = {
   amountOfFlags: 2,
   firstFlag: 'preset 2',
   firstTime: 4,
@@ -44,38 +33,46 @@ const preset2 : JsonData ={
   secondTime: 6,
   thirdFlag: 'no third flag',
   thirdTime: 13,
+};
+
+const preset3: JsonData = {
+  amountOfFlags: 3,
+  firstFlag: 'preset 3',
+  firstTime: 4,
+  secondFlag: 'flag 2',
+  secondTime: 4,
+  thirdFlag: 'last flag',
+  thirdTime: 4
 }
 
 export default function HomeScreen() {
   const router = useRouter();
+  const timerRef = useRef<any>(null);  // Create a ref to access Timer component
+
   const [currTime, setCurrTime] = useState<string>(new Date().toLocaleTimeString());
-  const [curText, setCurText] = useState<string>("null");
   const [currentPreset, setCurrentPreset] = useState<JsonData>(jsonData);
-  const [resetKey, setResetKey] = useState<boolean>(false);
 
-  const changeTimer = ()=>{
-    setCurrentPreset((prev)=> (prev === jsonData ? preset2 : jsonData));
+  // Change preset function
+  const changeTimer = () => {
+    setCurrentPreset((prev) => (prev === jsonData ? preset2 : jsonData));
     
-}
+    timerRef.current.resetTimer();  // Call resetTimer function from Timer
+    
+  };
 
-const resetTimer = () =>{
- if(1===1) console.log("true");
-}
-  
-  // useEffect to update the time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrTime(new Date().toLocaleTimeString());
-    }, 1000); // update every 1 second
+    }, 1000);
 
-    return () => clearInterval(interval); // cleanup interval on component unmount
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <Appbar.Header mode="small">
         <Appbar.Content title="AutoDick" />
-        <Text style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>{currTime}</Text>
+        <Text style={{ color: 'black', marginLeft: 8 }}>{currTime}</Text>
         <Button 
           mode="contained" 
           onPress={() => router.replace('./Presets')} 
@@ -84,27 +81,17 @@ const resetTimer = () =>{
           Presets
         </Button>
       </Appbar.Header>
-      <Timer data={currentPreset} />
-      <Text>{curText}</Text>
+
+      <Timer ref={timerRef} data={currentPreset} />  {/* Pass ref to Timer */}
+
       <Button 
-          mode="contained" 
-          onPress={() => {changeTimer(); resetTimer()}} 
-          style={{ marginLeft: 16, marginRight: 16, height: 50 }}
-        > change preset</Button>
-      {/* <TouchableOpacity
-        onPress={connectedDevice ? disconnectFromDevice : openModal}
-        style={styles.ctaButton}
+        mode="contained" 
+        onPress={changeTimer} 
+        style={{ marginLeft: 16, marginRight: 16, height: 50, width: 150 }}
       >
-        <Text style={styles.ctaButtonText}>
-          {connectedDevice ? "Disconnect" : "Connect"}
-        </Text>
-      </TouchableOpacity>
-      <DeviceModal
-        closeModal={hideModal}
-        visible={isModalVisible}
-        connectToPeripheral={connectToDevice}
-        devices={allDevices}
-      /> */}
+        Change Preset
+      </Button>
+      
     </View>
   );
 }
@@ -112,36 +99,22 @@ const resetTimer = () =>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
   },
   heartRateTitleWrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   heartRateTitleText: {
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginHorizontal: 20,
-    color: "black",
+    color: 'black',
   },
   heartRateText: {
     fontSize: 25,
     marginTop: 15,
-  },
-  ctaButton: {
-    backgroundColor: "#FF6060",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 50,
-    marginHorizontal: 20,
-    marginBottom: 5,
-    borderRadius: 8,
-  },
-  ctaButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
   },
 });
