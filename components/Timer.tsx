@@ -14,6 +14,9 @@ export type Props = {
     secondTime: number;
     thirdFlag: string;
     thirdTime: number;
+    fourthFlag: string;
+    fourthTime: number;
+    start: string;
   }
   
 };
@@ -79,34 +82,33 @@ const Timer = forwardRef (({data}: Props, ref) => {
   };
 
   const handleComplete = () => {
-    console.log("komt voor de if statement");
-    console.log(timesRun);
     setTimesRun((prev) => prev +1);
     if(timesRun < amountOfFlags - 1){
-      console.log("komt in if statement");
       console.log(timesRun);
       switch(timesRun){
-        case 0:
-          setCurrentFlag(data.secondFlag);
-          setNextFlag(data.thirdFlag);
+        case 0:  //na eerste complete vlag 1 -> vlag 2
+          setCurrentFlag(data.secondFlag); // 1 -> 2
+          setNextFlag(data.thirdFlag); // 2 -> 3
           setDuration(data.secondTime);
           break;
-        case 1:
-          console.log("case 1");
-          setCurrentFlag(data.thirdFlag);
-          setNextFlag("None");
+        case 1: //na tweede complete vlag 2 -> vlag 3
+          setCurrentFlag(data.thirdFlag); // 2 -> 3
+          setNextFlag(data.fourthFlag); // 3 -> 4
           setDuration(data.thirdTime);
           break;
-        case 2:
+        case 2: //na derde complete vlag 3 -> vlag 4
           console.log("case 2");
-          setCurrentFlag("klaar");
-          setNextFlag(" ");
-          setDuration(data.thirdTime);
+          setCurrentFlag(data.fourthFlag); // 3 -> 4
+          setNextFlag(data.start); 
+          setDuration(data.fourthTime);
           break;
-        case 3:
+        case 3: //na vierde complete vlag 4 -> start
           console.log("case 3");
-          setCurrentFlag("te vaak");
+          setCurrentFlag(data.start);
+          setNextFlag(" ");
           break;
+        case 4:
+          setCurrentFlag("borber kurwa");
         default:
           console.log("defualt");
           break;

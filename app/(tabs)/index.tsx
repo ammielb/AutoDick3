@@ -13,26 +13,35 @@ interface JsonData {
   secondTime: number;
   thirdFlag: string;
   thirdTime: number;
+  fourthFlag: string;
+  fourthTime: number;
+  start: string;
 }
 
 const preset1: JsonData = {
-  amountOfFlags: 3,
-  firstFlag: 'preset 1',
-  firstTime: 10,
-  secondFlag: 'flag 2',
-  secondTime: 15,
-  thirdFlag: 'flag 3',
-  thirdTime: 5,
+  amountOfFlags: 5,
+  firstFlag: 'klassenvlag hijsen',
+  firstTime: 60,
+  secondFlag: 'Straf vlag hijsen',
+  secondTime: 60,
+  thirdFlag: 'Straf vlag strijken',
+  thirdTime: 60,
+  fourthFlag: 'Klassenvlag strijken',
+  fourthTime: 1,
+  start: 'start'
 };
 
 const preset2: JsonData = {
   amountOfFlags: 2,
-  firstFlag: 'preset 2',
-  firstTime: 4,
-  secondFlag: 'flag 2 final flag',
-  secondTime: 6,
-  thirdFlag: 'no third flag',
-  thirdTime: 13,
+  firstFlag: 'klassenvlag hijsen',
+  firstTime: 60,
+  secondFlag: 'Straf vlag hijsen',
+  secondTime: 60,
+  thirdFlag: 'Straf vlag strijken',
+  thirdTime: 60,
+  fourthFlag: 'Klassenvlag strijken',
+  fourthTime: 60,
+  start: 'Start'
 };
 
 const preset3: JsonData = {
@@ -42,7 +51,10 @@ const preset3: JsonData = {
   secondFlag: 'flag 2',
   secondTime: 4,
   thirdFlag: 'last flag',
-  thirdTime: 4
+  thirdTime: 4,
+  fourthFlag: 'flag 4',
+  fourthTime: 3,
+  start: 'start'
 }
 
 export default function HomeScreen() {
@@ -100,13 +112,17 @@ export default function HomeScreen() {
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
           <Card.Title title="Preset 1"/>
           <Card.Content>
-            <Text>Amount of flags: {preset1.amountOfFlags}</Text>
-            <Text>Klassenvlag: {preset1.firstFlag}</Text>
-            <Text>First time: {preset1.firstTime}</Text>
-            <Text>Second flag: {preset1.secondFlag}</Text>
-            <Text>Second Time: {preset1.secondTime}</Text>
-            <Text>Third flag: {preset1.thirdFlag}</Text>
-            <Text>Third time: {preset1.thirdTime}</Text>
+            <Text>5: {preset1.firstFlag}</Text>
+            <Text>   Tijd tot straf vlag {preset1.firstTime/60} minuten</Text>
+            <br/>
+            <Text>4: {preset1.secondFlag}</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset1.secondTime/60} minuten</Text>
+            <br/>
+            <Text>1: {preset1.thirdFlag}</Text>
+            <Text>   Tijd tot start: {preset1.thirdTime/60} minuut</Text>
+            <br/>
+            <Text>0: {preset1.fourthFlag}</Text>
+            <Text>   Start</Text>
             <Button  mode="contained"  onPress={setPreset1} 
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
@@ -117,13 +133,17 @@ export default function HomeScreen() {
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
           <Card.Title title="Preset 2"/>
           <Card.Content>
-            <Text>Amount of flags: {preset2.amountOfFlags}</Text>
-            <Text>First flag: {preset2.firstFlag}</Text>
-            <Text>First time: {preset2.firstTime}</Text>
-            <Text>Second flag: {preset2.secondFlag}</Text>
-            <Text>Second Time: {preset2.secondTime}</Text>
-            <Text>Third flag: {preset2.thirdFlag}</Text>
-            <Text>Third time: {preset2.thirdTime}</Text>
+            <Text>4: {preset2.firstFlag}</Text>
+            <Text>   Tijd tot strafvlag: {preset2.firstTime/60} minuut</Text>
+            <br/>
+            <Text>3: {preset2.secondFlag}</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset2.secondTime/60} minuut</Text>
+            <br/>
+            <Text>2: {preset2.thirdFlag}</Text>
+            <Text>   Tijd tot klassenvlag omlaag: {preset2.thirdTime/60} minuut</Text>
+            <br/>
+            <Text>1: {preset2.fourthFlag}</Text>
+            <Text>   Tijd tot start: {preset2.fourthTime/60} minuut</Text>
             <Button  mode="contained"  onPress={setPreset2} 
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
