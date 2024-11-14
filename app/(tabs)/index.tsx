@@ -1,9 +1,9 @@
 // HomeScreen.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { Appbar, Button, Text } from 'react-native-paper';
+import { Appbar, Button, Text, Card } from 'react-native-paper';
 import Timer from '@/components/Timer';  // Import Timer component
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 
 interface JsonData {
   amountOfFlags: number;
@@ -15,7 +15,7 @@ interface JsonData {
   thirdTime: number;
 }
 
-const jsonData: JsonData = {
+const preset1: JsonData = {
   amountOfFlags: 3,
   firstFlag: 'preset 1',
   firstTime: 10,
@@ -50,14 +50,24 @@ export default function HomeScreen() {
   const timerRef = useRef<any>(null);  // Create a ref to access Timer component
 
   const [currTime, setCurrTime] = useState<string>(new Date().toLocaleTimeString());
-  const [currentPreset, setCurrentPreset] = useState<JsonData>(jsonData);
+  const [currentPreset, setCurrentPreset] = useState<JsonData>(preset1);
 
   // Change preset function
   const changeTimer = () => {
-    setCurrentPreset((prev) => (prev === jsonData ? preset2 : jsonData));
+    setCurrentPreset((prev) => (prev === preset1 ? preset2 : preset1));
     
     timerRef.current.resetTimer();  // Call resetTimer function from Timer
     
+  };
+
+  const setPreset1 = () => {
+    setCurrentPreset(preset1);
+    timerRef.current.resetTimer();
+  };
+
+  const setPreset2 = () => {
+    setCurrentPreset(preset2);
+    timerRef.current.resetTimer();
   };
 
   useEffect(() => {
@@ -69,30 +79,60 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Appbar.Header mode="small">
-        <Appbar.Content title="AutoDick" />
-        <Text style={{ color: 'black', marginLeft: 8 }}>{currTime}</Text>
-        <Button 
-          mode="contained" 
-          onPress={() => router.replace('./Presets')} 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-          Presets
-        </Button>
-      </Appbar.Header>
+    <ScrollView contentContainerStyle={{flexGrow: 1, padding: 16}}>
+      <View style={{ flex: 1 }}>
+        <Appbar.Header mode="small" style={{width: '100%'}}>
+          <Appbar.Content title="AutoDick" />
+          <Text style={{ color: 'black', marginLeft: 8 }}>{currTime}</Text>
+          <Button 
+            mode="contained" 
+            onPress={() => router.replace('./Presets')} 
+            style={{ marginLeft: 16, marginRight: 16 }}
+          >
+            Presets
+          </Button>
+        </Appbar.Header>
 
-      <Timer ref={timerRef} data={currentPreset} />  {/* Pass ref to Timer */}
+        <Timer ref={timerRef} data={currentPreset} />  {/* Pass ref to Timer */}
 
-      <Button 
-        mode="contained" 
-        onPress={changeTimer} 
-        style={{ marginLeft: 16, marginRight: 16, height: 50, width: 150 }}
-      >
-        Change Preset
-      </Button>
-      
-    </View>
+        
+
+        <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
+          <Card.Title title="Preset 1"/>
+          <Card.Content>
+            <Text>Amount of flags: {preset1.amountOfFlags}</Text>
+            <Text>Klassenvlag: {preset1.firstFlag}</Text>
+            <Text>First time: {preset1.firstTime}</Text>
+            <Text>Second flag: {preset1.secondFlag}</Text>
+            <Text>Second Time: {preset1.secondTime}</Text>
+            <Text>Third flag: {preset1.thirdFlag}</Text>
+            <Text>Third time: {preset1.thirdTime}</Text>
+            <Button  mode="contained"  onPress={setPreset1} 
+          style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
+              Set preset
+            </Button>
+          </Card.Content>
+        </Card>
+
+        <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
+          <Card.Title title="Preset 2"/>
+          <Card.Content>
+            <Text>Amount of flags: {preset2.amountOfFlags}</Text>
+            <Text>First flag: {preset2.firstFlag}</Text>
+            <Text>First time: {preset2.firstTime}</Text>
+            <Text>Second flag: {preset2.secondFlag}</Text>
+            <Text>Second Time: {preset2.secondTime}</Text>
+            <Text>Third flag: {preset2.thirdFlag}</Text>
+            <Text>Third time: {preset2.thirdTime}</Text>
+            <Button  mode="contained"  onPress={setPreset2} 
+          style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
+              Set preset
+            </Button>
+          </Card.Content>
+        </Card>
+        
+      </View>
+    </ScrollView>
   );
 }
 
