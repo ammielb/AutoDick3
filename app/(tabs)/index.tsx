@@ -44,19 +44,6 @@ const preset2: JsonData = {
   start: 'Start'
 };
 
-const preset3: JsonData = {
-  amountOfFlags: 3,
-  firstFlag: 'preset 3',
-  firstTime: 4,
-  secondFlag: 'flag 2',
-  secondTime: 4,
-  thirdFlag: 'last flag',
-  thirdTime: 4,
-  fourthFlag: 'flag 4',
-  fourthTime: 3,
-  start: 'start'
-}
-
 export default function HomeScreen() {
   const router = useRouter();
   const timerRef = useRef<any>(null);  // Create a ref to access Timer component
@@ -112,17 +99,17 @@ export default function HomeScreen() {
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
           <Card.Title title="Preset 1"/>
           <Card.Content>
-            <Text>5: {preset1.firstFlag}</Text>
-            <Text>   Tijd tot straf vlag {preset1.firstTime/60} minuten</Text>
+            <Text>5: {preset1.firstFlag}.</Text>
+            <Text>   Tijd tot straf vlag {preset1.firstTime/60} minuten.</Text>
             <br/>
-            <Text>4: {preset1.secondFlag}</Text>
-            <Text>   Tijd tot straf vlag omlaag: {preset1.secondTime/60} minuten</Text>
+            <Text>4: {preset1.secondFlag}.</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset1.secondTime/60} minuten.</Text>
             <br/>
-            <Text>1: {preset1.thirdFlag}</Text>
-            <Text>   Tijd tot start: {preset1.thirdTime/60} minuut</Text>
+            <Text>1: {preset1.thirdFlag}.</Text>
+            <Text>   Tijd tot start: {preset1.thirdTime/60} minuut.</Text>
             <br/>
-            <Text>0: {preset1.fourthFlag}</Text>
-            <Text>   Start</Text>
+            <Text>0: {preset1.fourthFlag}.</Text>
+            <Text>   Start.</Text>
             <Button  mode="contained"  onPress={setPreset1} 
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
@@ -133,17 +120,17 @@ export default function HomeScreen() {
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
           <Card.Title title="Preset 2"/>
           <Card.Content>
-            <Text>4: {preset2.firstFlag}</Text>
-            <Text>   Tijd tot strafvlag: {preset2.firstTime/60} minuut</Text>
+            <Text>4: {preset2.firstFlag}.</Text>
+            <Text>   Tijd tot strafvlag: {preset2.firstTime/60} minuut.</Text>
             <br/>
-            <Text>3: {preset2.secondFlag}</Text>
-            <Text>   Tijd tot straf vlag omlaag: {preset2.secondTime/60} minuut</Text>
+            <Text>3: {preset2.secondFlag}.</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset2.secondTime/60} minuut.</Text>
             <br/>
-            <Text>2: {preset2.thirdFlag}</Text>
-            <Text>   Tijd tot klassenvlag omlaag: {preset2.thirdTime/60} minuut</Text>
+            <Text>2: {preset2.thirdFlag}.</Text>
+            <Text>   Tijd tot klassenvlag omlaag: {preset2.thirdTime/60} minuut.</Text>
             <br/>
-            <Text>1: {preset2.fourthFlag}</Text>
-            <Text>   Tijd tot start: {preset2.fourthTime/60} minuut</Text>
+            <Text>1: {preset2.fourthFlag}.</Text>
+            <Text>   Tijd tot start: {preset2.fourthTime/60} minuut.</Text>
             <Button  mode="contained"  onPress={setPreset2} 
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
