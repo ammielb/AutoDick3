@@ -19,18 +19,31 @@ export function NavBar() {
 
   // Check if we are on the "Home" screen (index) or "Presets" screen
   // const isHomeScreen = segments.includes('index');
-  const isPresetsScreen = segments.includes("Presets");
-  console.log(isPresetsScreen)
+  // const isPresetsScreen = segments.indexOf('Presets');
+  console.log(segments[1])
+  const displayNavButtons = () =>{
+    if(segments[1] == undefined  ){
+      return (
+        <Button mode="contained" onPress={()=>{ router.replace('./Presets') } } style={{ marginLeft: 16, marginRight: 16 }}>
+          Presets
+        </Button>
+      )
+    }
+
+    return (
+      <Button mode="contained" onPress={()=>{ router.replace('./') } } style={{ marginLeft: 16, marginRight: 16 }}>
+      Home
+    </Button>
+    )
+  }
 
   return (
     <Appbar.Header style={{ display: 'flex', justifyContent: 'center' }} mode="small">
       <Text style={{ color: 'black' }}>{currTime}</Text>
       <Appbar.Content titleStyle={{ textAlign: 'center' }} title="AutoDick" />
 
-
-        <Button mode="contained" onPress={ (isPresetsScreen) ? ()=>{ router.replace('./') }: ()=>{ router.replace('./Presets') } } style={{ marginLeft: 16, marginRight: 16 }}>
-          Presets
-        </Button>
+        {displayNavButtons()}
+        {/*  */}
 
 
 

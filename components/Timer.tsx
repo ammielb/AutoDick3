@@ -4,12 +4,38 @@ import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-t
 import { Card } from 'react-native-paper';
 
 export type Props = {
-  timeSet: number;
+  data: {
+    amountOfFlags: number;
+    firstFlag: string;
+    firstTime: number;
+    secondFlag: string;
+    secondTime: number;
+    thirdFlag: string;
+    thirdTime: number;
+  }
+
 };
 
-const Timer: React.FC<Props> = ({ timeSet }) => {
+const Presets: React.FC<Props> = ({ data }) =>{
+  return(
+    <div>
+      <h1>{data.firstFlag}</h1>
+    </div>
+  );
+}
+
+const Timer: React.FC<Props> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0); // time  to reset the timer
+  const [time, setTime] = useState<number>(0); // Key to reset the timer
+  const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
+  const [label] = useState<string>("Now: " );
+  const [flag] = useState<string>("Next: " );
+  const [timerCounter, setTimerCounter] = useState<number>(1);
+  const [ currentFlag, setCurrentFlag ] = useState<string>(data.firstFlag);
+  const [ nextFlag, setNextFlag] = useState<string>(data.secondFlag);
+  const [timesRun, setTimesRun] = useState<number>(0);
+  const [amountOfFlags] = useState<number>(data.amountOfFlags);
+  
 
   const startTimer = () => {
     setIsPlaying(true);
@@ -21,18 +47,25 @@ const Timer: React.FC<Props> = ({ timeSet }) => {
 
   const resetTimer = () => {
     setIsPlaying(false);
-   setTime((prevTime) => prevTime + 1); // Change the time to reset the timer
+    setTime((prevTime) => prevTime + 1); // Update key to reset timer
+    setDuration(data.firstTime); // Reset to initial time
+    setCurrentFlag(data.firstFlag);
+    setNextFlag(data.secondFlag);
+    setTimerCounter(0);
   };
 
+  const add5min = () => {
+    setDuration((prevDuration) => prevDuration + 300); // Add 5 minutes (300 seconds)
+    setTime((prevTime) => prevTime + 1); // Reset key to apply new duration
+  };
 
   const formatTime = (remainingTime: number) => {
     const minutes = Math.floor(remainingTime / 60);
-    const seconds =remainingTime % 60;
+    const seconds = remainingTime % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }
+  };
 
-
-  const displayTime = (displayedText:TimeProps) => {
+  const displayTime = (displayedText: TimeProps) => {
     return (
       <Text
         accessibilityRole="timer"
@@ -45,27 +78,95 @@ const Timer: React.FC<Props> = ({ timeSet }) => {
     );
   };
 
+  const handleComplete = () => {
+    console.log("komt voor de if statement");
+    console.log(timesRun);
+    if(timesRun < amountOfFlags){
+      console.log("komt in if statement");
+      switch(timesRun){
+        case 0:
+          console.log("komt in case 0");
+          setCurrentFlag(data.secondFlag);
+          setNextFlag(data.thirdFlag);
+          setDuration(data.secondTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 1:
+          console.log("case 1");
+          setCurrentFlag(data.thirdFlag);
+          setNextFlag("None");
+          setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 2:
+          console.log("case 2");
+          setCurrentFlag("klaar");
+          setNextFlag(" ");
+          setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
+          break;
+        case 3:
+          console.log("case 3");
+          setCurrentFlag("te vaak");
+          break;
+        default:
+          console.log("defualt");
+          break;
+      }
+      console.log("komt uit case");
+      setTimesRun((prev) => prev +1);
+      return{ shouldRepeat: true};
+    }
+    // if (duration === data.firstTime && amountOfFlags > 1) {
+    //   // Switch to the next duration after the initial timer completes
+    //   
+    //   setDuration(data.secondTime);
+    //   setCurrentFlag(data.secondFlag);
+    //   setNextFlag(data.thirdFlag);
+    //   setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
+    // } else if(duration === data.secondTime && amountOfFlags > 2){
+    //   // Reset back to the initial duration if needed, or stop
+      
+    //   setCurrentFlag(data.thirdFlag);
+    //   setNextFlag("None");
+    //   setDuration(data.thirdTime);
+    //   setTime((prevTime) => prevTime + 1);
+    // }else if(duration === data.thirdTime && amountOfFlags > 3){
 
-  //  the actual HTML of the component
+    // }else{
+    //   setIsPlaying(false); // Stops the timer after completing the second duration
+    // }
+    
+    return { shouldRepeat: false };
+  };
+
+ 
+ 
+
   return (
     <Card style={styles.container}>
       <Card.Content>
-      <CountdownCircleTimer
-        key={time} // Key changes will reset the timer
-        duration={timeSet}
-        colors="#0000ff"
-        updateInterval={1}
-        isPlaying={isPlaying}
-      >
-        {displayTime }
-      </CountdownCircleTimer>
+        <Text style={styles.labelText}>Now: {currentFlag}</Text>
+        <Text style={styles.flagText}>Next: {nextFlag}</Text>
+        <CountdownCircleTimer
+          key={time} // Key changes reset the timer
+          duration={duration}
+          colors="#0000ff"
+          updateInterval={1}
+          isPlaying={isPlaying}
+          onComplete={handleComplete} // Switch to the next duration on complete
+        >
+          
+          {displayTime}
+        </CountdownCircleTimer>
       </Card.Content>
       
-      <Card.Actions >
+      <Card.Actions>
         <View style={styles.buttonContainer}>
-        <Button title="Start" onPress={startTimer} />
-        <Button title="Pause" onPress={pauseTimer} />
-        <Button title="Reset" onPress={resetTimer} />
+          <Button title="Start" onPress={startTimer} />
+          <Button title="Pause" onPress={pauseTimer} />
+          <Button title="Add 5 min" onPress={add5min} />
+          <Button title="reset" onPress={resetTimer} />
         </View>
       </Card.Actions>
     </Card>
@@ -79,7 +180,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    // width:'80%'
   },
   timeText: {
     fontSize: 48,
@@ -89,9 +189,19 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 25,
     display: 'flex',
-    flexDirection:"row",
+    flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  labelText: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  flagText: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 10
   },
 });
 

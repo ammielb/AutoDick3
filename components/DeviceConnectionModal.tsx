@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Device } from "react-native-ble-plx";
 
@@ -68,6 +69,9 @@ const DeviceModal: FC<DeviceModalProps> = (props) => {
         <Text style={modalStyle.modalTitleText}>
           Tap on a device to connect
         </Text>
+        <Pressable onPress={closeModal}>
+            <Text>close</Text>
+          </Pressable>
         <FlatList
           contentContainerStyle={modalStyle.modalFlatlistContiner}
           data={devices}

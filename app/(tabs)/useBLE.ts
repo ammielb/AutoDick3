@@ -25,15 +25,15 @@ interface BluetoothLowEnergyApi {
   disconnectFromDevice: () => void;
   connectedDevice: Device | null;
   allDevices: Device[];
-  heartRate: number;
+ writeToDevice: (device: Device, data: string) => Promise<void> 
 }
 
 function useBLE(): BluetoothLowEnergyApi {
   const bleManager = useMemo(() => new BleManager(), []);
   const [allDevices, setAllDevices] = useState<Device[]>([]);
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-  const [heartRate, setHeartRate] = useState<number>(0);
   const [writeInterval, setWriteInterval] = useState<NodeJS.Timeout | null>(null);
+
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
@@ -122,13 +122,6 @@ function useBLE(): BluetoothLowEnergyApi {
         setConnectedDevice(deviceConnection);
         await deviceConnection.discoverAllServicesAndCharacteristics();
         bleManager.stopDeviceScan();
-        startStreamingData(deviceConnection);
-  
-        // Start sending data repeatedly every 2 seconds
-        const intervalId = setInterval(() => {
-          writeToDevice(deviceConnection, "1");
-        }, 2000); // adjust the interval time as needed
-        setWriteInterval(intervalId);
       } catch (e) {
         console.log("FAILED TO CONNECT", e);
       }
@@ -138,37 +131,10 @@ function useBLE(): BluetoothLowEnergyApi {
     if (connectedDevice) {
       bleManager.cancelDeviceConnection(connectedDevice.id);
       setConnectedDevice(null);
-      setHeartRate(0);
     }
   };
 
-  const onHeartRateUpdate = (
-    error: BleError | null,
-    characteristic: Characteristic | null
-  ) => {
-    if (error) {
-      console.log(error);
-      return -1;
-    } else if (!characteristic?.value) {
-      console.log("No Data was recieved");
-      return -1;
-    }
-
-    const rawData = btoa(characteristic.value);
-    let innerHeartRate: number = -1;
-
-    const firstBitValue: number = Number(rawData) & 0x01;
-
-    if (firstBitValue === 0) {
-      innerHeartRate = rawData[1].charCodeAt(0);
-    } else {
-      innerHeartRate =
-        Number(rawData[1].charCodeAt(0) << 8) +
-        Number(rawData[2].charCodeAt(2));
-    }
-
-    setHeartRate(innerHeartRate);
-  };
+ 
   const writeToDevice = async (device: Device, data: string): Promise<void> => {
     // Encode the data to Base64
     const base64Data = Buffer.from(data).toString('base64');
@@ -186,17 +152,6 @@ function useBLE(): BluetoothLowEnergyApi {
   };
 
 
-  const startStreamingData = async (device: Device) => {
-    if (device) {
-      device.monitorCharacteristicForService(
-        SERVICE_UUID,
-        CHARACTERISTIC_UUID ,
-        onHeartRateUpdate
-      );
-    } else {
-      console.log("No Device Connected");
-    }
-  };
 
   return {
     scanForPeripherals,
@@ -205,7 +160,7 @@ function useBLE(): BluetoothLowEnergyApi {
     allDevices,
     connectedDevice,
     disconnectFromDevice,
-    heartRate,
+    writeToDevice,
   };
 }
 
