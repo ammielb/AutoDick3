@@ -13,6 +13,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "--jsx"
-, "components/Timer.jsx"  ]
+    "--jsx",
+     "components/Timer.tsx", "app/(tabs)/index.tsx"  ],
+     
 }

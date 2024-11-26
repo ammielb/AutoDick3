@@ -91,7 +91,6 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-
       <Divider/>
       {/* timer */}
       <Timer data={jsonData} />
@@ -142,12 +141,10 @@ export default function HomeScreen() {
         onPress={connectedDevice ? disconnectFromDevice : openModal}
         style={styles.ctaButton}
       >
-
         <Text style={styles.ctaButtonText}>
           {connectedDevice ? "Disconnect" : "Connect"}
         </Text>
       </TouchableOpacity>
-
 
 
       <DeviceModal
