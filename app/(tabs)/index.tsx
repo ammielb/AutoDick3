@@ -3,14 +3,14 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import Timer from '@/components/Timer';
 import DeviceModal from '@/components/DeviceConnectionModal';
-import useBLE from './useBLE';
+// import useBLE from './useBLE';
 import {
   StyleSheet,
   TouchableOpacity,
   View,
   Pressable
 } from 'react-native';
-// import useBLE from './useBLE';
+import useBLE from './useBLE';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Define the structure of jsonData with an interface
@@ -26,11 +26,11 @@ interface JsonData {
 
 const jsonData: JsonData = {
   amountOfFlags: 3,
-  firstFlag: 'papa weg',
+  firstFlag: 'klassen vlag omhoog',
   firstTime: 10,
-  secondFlag: 'mama niet weg',
+  secondFlag: 'straf vlag omhoog',
   secondTime: 15,
-  thirdFlag: 'ome hendrik ligt in het gekkenhuis',
+  thirdFlag: 'nog 1 minuut voor start  en straf vlag omlaag',
   thirdTime: 5,
 };
 
@@ -51,34 +51,34 @@ export default function HomeScreen() {
     fetchPreset();
   }, []);
   
-  // // Destructure values from useBLE and define types explicitly
-  // const {
-  //   requestPermissions,
-  //   scanForPeripherals,
-  //   allDevices,
-  //   connectToDevice,
-  //   connectedDevice,
-  //   disconnectFromDevice,
-  //   writeToDevice
-  // } = useBLE();
+  // Destructure values from useBLE and define types explicitly
+  const {
+    requestPermissions,
+    scanForPeripherals,
+    allDevices,
+    connectToDevice,
+    connectedDevice,
+    disconnectFromDevice,
+    writeToDevice
+  } = useBLE();
 
-  // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  // const scanForDevices = async () => {
-  //   const isPermissionsEnabled = await requestPermissions();
-  //   if (isPermissionsEnabled) {
-  //     scanForPeripherals();
-  //   }
-  // };
+  const scanForDevices = async () => {
+    const isPermissionsEnabled = await requestPermissions();
+    if (isPermissionsEnabled) {
+      scanForPeripherals();
+    }
+  };
 
-  // const hideModal = () => {
-  //   setIsModalVisible(false);
-  // };
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
 
-  // const openModal = async () => {
-  //   await scanForDevices();
-  //   setIsModalVisible(true);
-  // };
+  const openModal = async () => {
+    await scanForDevices();
+    setIsModalVisible(true);
+  };
 
   // useEffect to update the time every second
   useEffect(() => {
@@ -91,39 +91,28 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header mode="small">
-        <Appbar.Content title="AutoDick" />
-        <Text style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>{currTime}</Text>
-        <Button 
-          mode="contained" 
-          onPress={() => router.replace('./Presets')} 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-          Presets
-        </Button>
-      </Appbar.Header>
       <Divider/>
       {/* timer */}
       <Timer data={jsonData} />
 
       <Divider/>
       {/*  toeter BZZZZZ */}
-{/* 
+
         {connectedDevice  && (
-        <View style={{backgroundColor: 'blue', flex: 0.2}} >
+        <View style={{display:'flex', justifyContent:'space-between' ,flexDirection:'row'}} >
       
           <Button 
           mode="contained" 
           onPress={()=>
             {
               try {
-                writeToDevice(connectedDevice, "1");
+                writeToDevice(connectedDevice, "0");
               }catch(e){}
             }
           } 
-          style={{ marginLeft: 16, marginRight: 16 }}
+          style={{ marginLeft: 16, marginRight: 16, width:'45%' }}
         >
-          send 1
+          uit
         </Button>
 
         <Button 
@@ -135,37 +124,57 @@ export default function HomeScreen() {
               }catch(e){}
             }
           } 
-          style={{ marginLeft: 16, marginRight: 16 }}
+          style={{ marginLeft: 16, marginRight: 16 , width:'45%' }}
         >
-          send 1
+         aan 
         </Button>
           
     </View>
-  )} */}
+  )}
   <Divider/>
       {/*  bluetooth connection button*/}
-      {/* <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
+      <Text style={styles.labelText}>
           {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
       </Text>
+ 
        <TouchableOpacity
         onPress={connectedDevice ? disconnectFromDevice : openModal}
         style={styles.ctaButton}
       >
-        
         <Text style={styles.ctaButtonText}>
           {connectedDevice ? "Disconnect" : "Connect"}
         </Text>
       </TouchableOpacity>
 
-      <Pressable onPress={hideModal}>
-        <Text>close</Text>
-      </Pressable>
 
       <DeviceModal
         closeModal={hideModal}
         visible={isModalVisible}
         connectToPeripheral={connectToDevice}
         devices={allDevices}
+      /> 
+
+
+            {/* only uncomment this if you want tot test the page without the bluetooth. because bluetooth only works if you build it into an APK and run it on your phone.*/}
+
+      {/* <Text style={styles.labelText}>
+          {"Connect to a Bluetooth device"}
+      </Text>
+
+      <TouchableOpacity
+        onPress={()=>{}}
+        style={styles.ctaButton}
+      >
+        <Text style={styles.ctaButtonText}>
+          {"asdsadasd"}
+        </Text>
+      </TouchableOpacity>
+
+      <DeviceModal
+        closeModal={()=>{}}
+        visible={false}
+        connectToPeripheral={()=>{}}
+        devices={[]}
       />  */}
     </View>
   );
@@ -205,5 +214,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
+  },
+  labelText: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginBottom: 10,
+    alignSelf:'center',
   },
 });
