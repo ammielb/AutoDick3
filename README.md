@@ -67,3 +67,7 @@ Join our community of developers creating universal apps.
 
 ## tutorial to turn this project into a APK
 https://www.youtube.com/watch?v=3j9DcRCxrFg
+
+
+## script to make a build and get an APK in expo go
+ eas build --profile preview  --platform android

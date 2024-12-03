@@ -1,9 +1,7 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
 import { Card } from 'react-native-paper';
-
-
 
 export type Props = {
   data: {
@@ -14,15 +12,19 @@ export type Props = {
     secondTime: number;
     thirdFlag: string;
     thirdTime: number;
-    fourthFlag: string;
-    fourthTime: number;
-    start: string;
   }
-  
+
 };
 
+const Presets: React.FC<Props> = ({ data }) =>{
+  return(
+    <div>
+      <h1>{data.firstFlag}</h1>
+    </div>
+  );
+}
 
-const Timer = forwardRef (({data}: Props, ref) => {
+const Timer: React.FC<Props> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
   const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
@@ -47,15 +49,10 @@ const Timer = forwardRef (({data}: Props, ref) => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(data.firstTime); // Reset to initial time
-    setTimesRun(0);
     setCurrentFlag(data.firstFlag);
     setNextFlag(data.secondFlag);
     setTimerCounter(0);
   };
-
-  useImperativeHandle(ref, () => ({
-    resetTimer
-  }));
 
   const add5min = () => {
     setDuration((prevDuration) => prevDuration + 300); // Add 5 minutes (300 seconds)
@@ -68,56 +65,71 @@ const Timer = forwardRef (({data}: Props, ref) => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-  const displayTime = (displayedText: TimeProps) => {
-    return (
-      <Text
-        accessibilityRole="timer"
-        accessibilityLiveRegion="assertive"
-        importantForAccessibility="yes"
-        style={styles.timeText}
-      >
-        {formatTime(displayedText.remainingTime)}
-      </Text>
-    );
-  };
+  // const displayTime = (displayedText: TimeProps) => {
+  //   return (
+     
+  //   );
+  // };
 
   const handleComplete = () => {
-    setTimesRun((prev) => prev +1);
-    if(timesRun < amountOfFlags - 1){
-      console.log(timesRun);
+    console.log("komt voor de if statement");
+    console.log(timesRun);
+    if(timesRun < amountOfFlags){
+      console.log("komt in if statement");
       switch(timesRun){
-        case 0:  //na eerste complete vlag 1 -> vlag 2
-          setCurrentFlag(data.secondFlag); // 1 -> 2
-          setNextFlag(data.thirdFlag); // 2 -> 3
+        case 0:
+          console.log("komt in case 0");
+          setCurrentFlag(data.secondFlag);
+          setNextFlag(data.thirdFlag);
           setDuration(data.secondTime);
+          setTime((prevTime)=> prevTime +1);
           break;
-        case 1: //na tweede complete vlag 2 -> vlag 3
-          setCurrentFlag(data.thirdFlag); // 2 -> 3
-          setNextFlag(data.fourthFlag); // 3 -> 4
+        case 1:
+          console.log("case 1");
+          setCurrentFlag(data.thirdFlag);
+          setNextFlag("None");
           setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
           break;
-        case 2: //na derde complete vlag 3 -> vlag 4
+        case 2:
           console.log("case 2");
-          setCurrentFlag(data.fourthFlag); // 3 -> 4
-          setNextFlag(data.start); 
-          setDuration(data.fourthTime);
-          break;
-        case 3: //na vierde complete vlag 4 -> start
-          console.log("case 3");
-          setCurrentFlag(data.start);
+          setCurrentFlag("klaar");
           setNextFlag(" ");
+          setDuration(data.thirdTime);
+          setTime((prevTime)=> prevTime +1);
           break;
-        case 4:
-          setCurrentFlag("borber kurwa");
+        case 3:
+          console.log("case 3");
+          setCurrentFlag("te vaak");
+          break;
         default:
           console.log("defualt");
           break;
       }
       console.log("komt uit case");
-      console.log(timesRun);
-      setTime((prevtime)=> prevtime + 1);
+      setTimesRun((prev) => prev +1);
       return{ shouldRepeat: true};
     }
+    // if (duration === data.firstTime && amountOfFlags > 1) {
+    //   // Switch to the next duration after the initial timer completes
+    //   
+    //   setDuration(data.secondTime);
+    //   setCurrentFlag(data.secondFlag);
+    //   setNextFlag(data.thirdFlag);
+    //   setTime((prevTime) => prevTime + 1); // Reset timer to trigger new duration
+    // } else if(duration === data.secondTime && amountOfFlags > 2){
+    //   // Reset back to the initial duration if needed, or stop
+      
+    //   setCurrentFlag(data.thirdFlag);
+    //   setNextFlag("None");
+    //   setDuration(data.thirdTime);
+    //   setTime((prevTime) => prevTime + 1);
+    // }else if(duration === data.thirdTime && amountOfFlags > 3){
+
+    // }else{
+    //   setIsPlaying(false); // Stops the timer after completing the second duration
+    // }
+    
     return { shouldRepeat: false };
   };
 
@@ -127,8 +139,8 @@ const Timer = forwardRef (({data}: Props, ref) => {
   return (
     <Card style={styles.container}>
       <Card.Content>
-        <Text style={styles.labelText}>Now: {currentFlag}</Text>
-        <Text style={styles.flagText}>Next: {nextFlag}</Text>
+        <Text style={styles.labelText}>{"Now:"+ currentFlag}</Text>
+        <Text style={styles.flagText}>{"Next: "+nextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}
@@ -138,7 +150,16 @@ const Timer = forwardRef (({data}: Props, ref) => {
           onComplete={handleComplete} // Switch to the next duration on complete
         >
           
-          {displayTime}
+          {({ remainingTime })  =>
+             <Text
+             accessibilityRole="timer"
+             accessibilityLiveRegion="assertive"
+             importantForAccessibility="yes"
+             style={styles.timeText}
+           >
+             {formatTime(remainingTime)}
+           </Text>
+          }
         </CountdownCircleTimer>
       </Card.Content>
       
@@ -152,7 +173,7 @@ const Timer = forwardRef (({data}: Props, ref) => {
       </Card.Actions>
     </Card>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
