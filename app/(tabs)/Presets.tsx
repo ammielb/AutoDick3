@@ -27,6 +27,9 @@ const Presets: React.FC = () => {
       console.error("Failed to save preset:", error);
     }
   };
+  const log = () =>{
+    console.log("tron cat");
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,14 +45,9 @@ const Presets: React.FC = () => {
         </Button>
       </Appbar.Header>
 
-      <Button 
-        mode="contained" 
-        onPress={() => setVlaggen(["papa", "Opa", "geel"])}
-      >
-        Hoeren Knop
-      </Button>
-      <Button mode="contained" onPress={savePreset}>
-        Save Preset
+      
+      <Button mode="contained" onPress={log}>
+        Log
       </Button>
     </View>
   );

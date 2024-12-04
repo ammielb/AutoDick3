@@ -100,7 +100,7 @@ export default function HomeScreen() {
           <Card.Title title="Preset 1"/>
           <Card.Content>
             <Text>5: {preset1.firstFlag}.</Text>
-            <Text>   Tijd tot straf vlag {preset1.firstTime/60} minuten.</Text>
+            <Text>{"   Tijd tot straf vlag "+ preset1.firstTime/60 + " minuten."}</Text>
             <br/>
             <Text>4: {preset1.secondFlag}.</Text>
             <Text>   Tijd tot straf vlag omlaag: {preset1.secondTime/60} minuten.</Text>
