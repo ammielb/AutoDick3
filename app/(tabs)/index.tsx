@@ -85,7 +85,7 @@ export default function HomeScreen() {
           <Text style={{ color: 'black', marginLeft: 8 }}>{currTime}</Text>
           <Button 
             mode="contained" 
-            onPress={() => router.replace('./Presets')} 
+            onPress={() => router.replace('./csvWriting')} 
             style={{ marginLeft: 16, marginRight: 16 }}
           >
             Presets
