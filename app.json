@@ -4,6 +4,7 @@
     "owner": "ammielb",
     "slug": "autodick3",
     "version": "1.0.0",
+    "runtimeVersion": "1.0.0", // Set your runtime version explicitly
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -39,9 +40,9 @@
         "projectId": "cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    // "runtimeVersion": {
+    //   "policy": "appVersion"
+    // },
     "updates": {
       "url": "https://u.expo.dev/cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
     }
