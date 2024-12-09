@@ -1,45 +1,59 @@
-import React from 'react';
-import { Button, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Button, View, Text, Platform } from 'react-native';
+import Papa from 'papaparse';
 import * as FileSystem from 'expo-file-system';
 
-export default function CsvAppendingScreen() {
-  const appendToCSV = async () => {
-    const fileUri = `${FileSystem.documentDirectory}text.csv`;
+export default function CsvWritingScreen() {
+  const [csvDataUrl, setCsvDataUrl] = useState<string | null>(null);
 
-    try {
-      // Controleer of het bestand al bestaat
-      const fileExists = await FileSystem.getInfoAsync(fileUri);
+  const prepareCSV = async () => {
+    const data = [
+      ["vlag", "Tijd", "klassen"],
+      ["Papa vlag", "16:53", "dsaf"],
+      ["Oranje vlag", "17:00", "dsagf"],
+    ];
 
-      if (fileExists.exists) {
-        // Lees de bestaande inhoud van het bestand
-        const existingContent = await FileSystem.readAsStringAsync(fileUri);
+    const csvString = Papa.unparse(data);
 
-        // Voeg een nieuwe lijn toe
-        const newLine = "Nieuwe vlag, 18:30, Klasse C";
-        const updatedContent = `${existingContent}\n${newLine}`;
-
-        // Schrijf de bijgewerkte inhoud terug naar het bestand
-        await FileSystem.writeAsStringAsync(fileUri, updatedContent, {
+    if (Platform.OS === 'web') {
+      // Voorbereiden, maar nog niet downloaden
+      const blob = new Blob([csvString], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      setCsvDataUrl(url); // Opslaan in state voor later gebruik
+      console.log("CSV voorbereid, klaar om te downloaden.");
+    } else {
+      // Voor Android/iOS: gebruik expo-file-system
+      const fileUri = `${FileSystem.documentDirectory}text.csv`;
+      try {
+        await FileSystem.writeAsStringAsync(fileUri, csvString, {
           encoding: FileSystem.EncodingType.UTF8,
         });
-        console.log("Nieuwe lijn toegevoegd:", newLine);
-      } else {
-        // Als het bestand niet bestaat, maak een nieuw bestand met headers en eerste regel
-        const initialContent = "Vlag, Tijd, Klasse\nNieuwe vlag, 18:30, Klasse C";
-        await FileSystem.writeAsStringAsync(fileUri, initialContent, {
-          encoding: FileSystem.EncodingType.UTF8,
-        });
-        console.log("Nieuw CSV-bestand aangemaakt:", fileUri);
+        console.log("CSV opgeslagen:", fileUri);
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error("Fout bij het schrijven naar CSV:", error);
+    }
+  };
+
+  const downloadCSV = () => {
+    if (csvDataUrl) {
+      const link = document.createElement('a');
+      link.href = csvDataUrl;
+      link.download = 'text.csv';
+      link.click();
+      URL.revokeObjectURL(csvDataUrl); // Vrijmaken van geheugen
+      setCsvDataUrl(null); // Reset de URL
+      console.log("CSV gedownload.");
     }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>CSV Toevoegen Demo</Text>
-      <Button title="Voeg lijn toe aan CSV" onPress={appendToCSV} />
+      <Text>CSV Schrijven Demo</Text>
+      <Button title="Bereid CSV voor" onPress={prepareCSV} />
+      {Platform.OS === 'web' && csvDataUrl && (
+        <Button title="Download CSV" onPress={downloadCSV} />
+      )}
     </View>
   );
 }
