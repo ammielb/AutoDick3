@@ -20,7 +20,7 @@ export function NavBar() {
   // Check if we are on the "Home" screen (index) or "Presets" screen
   // const isHomeScreen = segments.includes('index');
   // const isPresetsScreen = segments.indexOf('Presets');
-  console.log(segments[1])
+
   const displayNavButtons = () =>{
     if(segments[1] == undefined  ){
       return (

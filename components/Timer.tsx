@@ -2,38 +2,41 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
 import { Card } from 'react-native-paper';
-
-
-
+import useBLE from '../app/(tabs)/useBLE';
+import {Device} from "react-native-ble-plx";
+interface flags{
+  notification:String,
+  time:number
+}
 export type Props = {
-  data: {
-    amountOfFlags: number;
-    firstFlag: string;
-    firstTime: number;
-    secondFlag: string;
-    secondTime: number;
-    thirdFlag: string;
-    thirdTime: number;
-    fourthFlag: string;
-    fourthTime: number;
-    start: string;
-  }
+data:{
+  amountOfFlags: number;
+  flags: flags[]
+  start:String
+}
+connectedDevice : Device | null
   
 };
 
 
-const Timer = forwardRef (({data}: Props, ref) => {
+
+const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0); // Key to reset the timer
-  const [duration, setDuration] = useState<number>(data.firstTime); // Start with initial time
+  const [duration, setDuration] = useState<number>(data.flags[0].time); // Start with initial time
   const [label] = useState<string>("Now: " );
   const [flag] = useState<string>("Next: " );
   const [timerCounter, setTimerCounter] = useState<number>(1);
-  const [ currentFlag, setCurrentFlag ] = useState<string>(data.firstFlag);
-  const [ nextFlag, setNextFlag] = useState<string>(data.secondFlag);
+  const [ currentFlag, setCurrentFlag ] = useState<string>(data.flags[0].notification.toString());
+  const [ nextFlag, setNextFlag] = useState<string>(data.flags[1].notification.toString());
   const [timesRun, setTimesRun] = useState<number>(0);
   const [amountOfFlags] = useState<number>(data.amountOfFlags);
   
+
+
+  const {
+    writeToDevice
+  } = useBLE();
 
   const startTimer = () => {
     setIsPlaying(true);
@@ -46,10 +49,10 @@ const Timer = forwardRef (({data}: Props, ref) => {
   const resetTimer = () => {
     setIsPlaying(false);
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
-    setDuration(data.firstTime); // Reset to initial time
+    setDuration(data.flags[0].time); // Reset to initial time
     setTimesRun(0);
-    setCurrentFlag(data.firstFlag);
-    setNextFlag(data.secondFlag);
+    setCurrentFlag(data.flags[0].notification.toString());
+    setNextFlag(data.flags[1].notification.toString());
     setTimerCounter(0);
   };
 
@@ -81,40 +84,80 @@ const Timer = forwardRef (({data}: Props, ref) => {
     );
   };
 
+  const notificationCountdown = (serieCode : number, remainingTime: number, heisen: number) =>{
+    //  check if the remaing time is 60 50 40 30 20 or 10 seconds
+
+      if(remainingTime % 5 == 0 ){
+        let transmitData = serieCode + "" + remainingTime + "" +  heisen
+        console.log(transmitData);
+        if(connectedDevice != undefined){
+          writeToDevice(connectedDevice,transmitData.toString());
+        }
+      }
+  }
+  const handleUpdate = (remainingTime: number) =>{
+    
+
+      if(remainingTime > 60){
+         return;
+      }
+      switch(timesRun){
+
+        // voor de klassen vlag 
+        case 0:
+          notificationCountdown(2, remainingTime , 1);
+          break;
+
+        //voor de procedure vlag
+        case 1:
+          notificationCountdown(3, remainingTime, 1);
+          break;
+
+          // procedure vlag gaat in
+        case 2:
+          notificationCountdown(3, remainingTime, 0);
+          break;
+
+          //start van race
+        case 3:
+          notificationCountdown(2, remainingTime, 0);
+          break;
+        
+        //na de klassen en voor de proceduren vlag 
+      }
+
+  }
+
+
   const handleComplete = () => {
     setTimesRun((prev) => prev +1);
+    
     if(timesRun < amountOfFlags - 1){
-      console.log(timesRun);
-      switch(timesRun){
-        case 0:  //na eerste complete vlag 1 -> vlag 2
-          setCurrentFlag(data.secondFlag); // 1 -> 2
-          setNextFlag(data.thirdFlag); // 2 -> 3
-          setDuration(data.secondTime);
-          break;
-        case 1: //na tweede complete vlag 2 -> vlag 3
-          setCurrentFlag(data.thirdFlag); // 2 -> 3
-          setNextFlag(data.fourthFlag); // 3 -> 4
-          setDuration(data.thirdTime);
-          break;
-        case 2: //na derde complete vlag 3 -> vlag 4
-          console.log("case 2");
-          setCurrentFlag(data.fourthFlag); // 3 -> 4
-          setNextFlag(data.start); 
-          setDuration(data.fourthTime);
-          break;
-        case 3: //na vierde complete vlag 4 -> start
-          console.log("case 3");
-          setCurrentFlag(data.start);
-          setNextFlag(" ");
-          break;
-        case 4:
-          setCurrentFlag("borber kurwa");
-        default:
-          console.log("defualt");
-          break;
+      let currentFlag, duration, nextFlag;
+
+
+      // check if there is a flag available
+      // 
+      // 
+      if(data.flags[timesRun+1] != undefined){
+        currentFlag = data.flags[timesRun+1].notification.toString();
+        duration=data.flags[timesRun+1].time;
+      }else{
+        currentFlag = " "
+        duration=0;
       }
-      console.log("komt uit case");
-      console.log(timesRun);
+      
+      if (data.flags[timesRun+2] != undefined){
+        nextFlag = data.flags[timesRun+2].notification.toString()
+      }else{
+        nextFlag=" ";
+      }
+    
+      setCurrentFlag(currentFlag); 
+      setNextFlag(nextFlag); 
+      setDuration(duration);
+
+
       setTime((prevtime)=> prevtime + 1);
       return{ shouldRepeat: true};
     }
@@ -135,6 +178,7 @@ const Timer = forwardRef (({data}: Props, ref) => {
           colors="#0000ff"
           updateInterval={1}
           isPlaying={isPlaying}
+          onUpdate={handleUpdate}
           onComplete={handleComplete} // Switch to the next duration on complete
         >
           
@@ -148,6 +192,13 @@ const Timer = forwardRef (({data}: Props, ref) => {
           <Button title="Pause" onPress={pauseTimer} />
           <Button title="Add 5 min" onPress={add5min} />
           <Button title="reset" onPress={resetTimer} />
+          <Button title="testing" onPress={()=>
+            {
+              try {
+                notificationCountdown(2, 30 , 1);
+              }catch(e){}
+            }
+          } />
         </View>
       </Card.Actions>
     </Card>
