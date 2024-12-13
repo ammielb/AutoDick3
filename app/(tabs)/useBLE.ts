@@ -96,21 +96,16 @@ function useBLE(): BluetoothLowEnergyApi {
 
   const scanForPeripherals = () =>
     bleManager.startDeviceScan(null, null, (error, device) => {
-      // console.log(device);
-      // console.log(device);
-      // console.log(device);
       if (error) {
         console.log(error);
       }
 
 
-      if (device && device.name?.includes("Long name works now")) {
+      if (device && device.name?.includes("AutoDick4")) {
         setAllDevices((prevState: Device[]) => {
           if (!isDuplicateDevice(prevState, device)) {
-            // console.log('asdasd')
             return [...prevState, device];
           }
-          // console.log('asdasd')
           return prevState;
         });
       }

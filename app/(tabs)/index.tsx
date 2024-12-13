@@ -4,57 +4,51 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import Timer from '@/components/Timer';
 import DeviceModal from '@/components/DeviceConnectionModal';
-// import useBLE from './useBLE';
+import useBLE from './useBLE';
 import {
   StyleSheet,
   TouchableOpacity,
   View,
   Pressable
 } from 'react-native';
-import useBLE from './useBLE';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {  Card } from 'react-native-paper';
 
 import { ScrollView } from 'react-native';
 
-interface JsonData {
+interface flags{
+  notification:String,
+  time:number
+}
+interface JsonData{
   amountOfFlags: number;
-  firstFlag: string;
-  firstTime: number;
-  secondFlag: string;
-  secondTime: number;
-  thirdFlag: string;
-  thirdTime: number;
-  fourthFlag: string;
-  fourthTime: number;
-  start: string;
+  flags: flags[],
+  start:String
 }
 
 const preset1: JsonData = {
-  amountOfFlags: 5,
-  firstFlag: 'klassenvlag hijsen',
-  firstTime: 60,
-  secondFlag: 'Straf vlag hijsen',
-  secondTime: 60,
-  thirdFlag: 'Straf vlag strijken',
-  thirdTime: 60,
-  fourthFlag: 'Klassenvlag strijken',
-  fourthTime: 1,
+  amountOfFlags: 4,
+  flags: [
+    {notification: 'klassenvlag hijsen',time: 60},
+    {notification: 'Straf vlag hijsen',time: 180},
+    {notification: 'Straf vlag strijken',time: 60},
+    {notification: 'Klassenvlag strijken' ,time: 60},
+  ],
+  start: 'start'
+};
+const preset2: JsonData = {
+  amountOfFlags: 4,
+  flags: [
+    {notification: 'klassenvlag hijsen',time: 60},
+    {notification: 'Straf vlag hijsen',time: 60},
+    {notification: 'Straf vlag strijken',time: 60},
+    {notification: 'Klassenvlag strijken' ,time: 1},
+  ],
   start: 'start'
 };
 
-const preset2: JsonData = {
-  amountOfFlags: 2,
-  firstFlag: 'klassenvlag hijsen',
-  firstTime: 60,
-  secondFlag: 'Straf vlag hijsen',
-  secondTime: 60,
-  thirdFlag: 'Straf vlag strijken',
-  thirdTime: 60,
-  fourthFlag: 'Klassenvlag strijken',
-  fourthTime: 60,
-  start: 'Start'
-};
+
+
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -83,7 +77,6 @@ export default function HomeScreen() {
     }
   };
 
-// functions 
   const hideDeviceTab = () => {
     setIsDeviceTabVisible(false);
   };
@@ -124,52 +117,8 @@ export default function HomeScreen() {
 
   return (
     <ScrollView >
-
-      {/* timer */}
-      <Timer ref={timerRef} data={currentPreset} />  
-
-      <Divider/>
-      {/*  toeter BZZZZZ */}
-      {/* if there is a BL devices connected display action keys for BL  */}
-        {connectedDevice  && (
-        <View style={{backgroundColor: 'blue', flex: 0.2}} >
-      
-
-      {/* send the number 1 via bluetooth */}
-          <Button 
-          mode="contained" 
-          onPress={()=>
-            {
-              try {
-                writeToDevice(connectedDevice, "1");
-              }catch(e){}
-            }
-          } 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-          send 1
-        </Button>
-
-      {/* send the number 2 via bluetooth */}
-        <Button 
-          mode="contained" 
-          onPress={()=>
-            {
-              try {
-                writeToDevice(connectedDevice, "1");
-              }catch(e){}
-            }
-          } 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-          send 1
-        </Button>
-          
-    </View>
-  )}
-  <Divider/>
-      {/*  bluetooth connection button*/}
-      <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
+    {/*  bluetooth connection button*/}
+    <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
           {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
       </Text>
 
@@ -192,6 +141,69 @@ export default function HomeScreen() {
       /> 
 
 
+            {/* only uncomment this if you want tot test the page without the bluetooth. because bluetooth only works if you build it into an APK and run it on your phone.*/}
+
+      {/* <Text style={styles.labelText}>
+          {"Connect to a Bluetooth device"}
+      </Text>
+
+      <TouchableOpacity
+        onPress={()=>{}}
+        style={styles.ctaButton}
+      >
+        <Text style={styles.ctaButtonText}>
+          {"asdsadasd"}
+        </Text>
+      </TouchableOpacity>
+
+      <DeviceModal
+        closeModal={()=>{}}
+        visible={false}
+        connectToPeripheral={()=>{}}
+        devices={[]}
+      />  */}
+      {/* timer */}
+      <Timer ref={timerRef}  data={currentPreset} connectedDevice={connectedDevice}/>  
+
+      <Divider/>
+      {/*  toeter BZZZZZ */}
+      {/* if there is a BL devices connected display action keys for BL  */}
+        {connectedDevice  && (
+          <View style={{display:'flex', justifyContent:'space-between' ,flexDirection:'row'}} >
+
+          <Button 
+          mode="contained" 
+          onPress={()=>
+            {
+              try {
+                writeToDevice(connectedDevice, "02");
+              }catch(e){}
+            }
+          } 
+          style={{ marginLeft: 16, marginRight: 16 }}
+        >
+          long Press
+        </Button>
+
+  
+        <Button 
+          mode="contained" 
+          onPress={()=>
+            {
+              try {
+                writeToDevice(connectedDevice, "01");
+              }catch(e){}
+            }
+          } 
+          style={{ marginLeft: 16, marginRight: 16 }}
+        >
+         short Press
+        </Button>
+          
+    </View>
+  )}
+  <Divider/>
+  
 
 
 
@@ -202,19 +214,19 @@ export default function HomeScreen() {
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
           <Card.Title title="Preset 1"/>
           <Card.Content>
-            <Text>5: {preset1.firstFlag}.</Text>
-            <Text>   Tijd tot straf vlag {preset1.firstTime/60} minuten.</Text>
+            <Text>5: {preset1.flags[0].notification.toString()}.</Text>
+            <Text>   Tijd tot straf vlag {preset1.flags[0].time/60} minuten.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>4: {preset1.secondFlag}.</Text>
-            <Text>   Tijd tot straf vlag omlaag: {preset1.secondTime/60} minuten.</Text>
+            <Text>4: {preset1.flags[1].notification.toString()}.</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset1.flags[0].time/60} minuten.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>1: {preset1.thirdFlag}.</Text>
-            <Text>   Tijd tot start: {preset1.thirdTime/60} minuut.</Text>
+            <Text>1: {preset1.flags[2].notification.toString()}.</Text>
+            <Text>   Tijd tot start: {preset1.flags[0].time/60} minuut.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>0: {preset1.fourthFlag}.</Text>
+            <Text>0: {preset1.flags[3].notification.toString()}.</Text>
             <Text>   Start.</Text>
 
             {/* button to change tthe preset for timer */}
@@ -226,29 +238,28 @@ export default function HomeScreen() {
         </Card>
 
         <Card style={{ marginTop: 16, width: '100%', alignItems: 'center'}}>
-          <Card.Title title="Preset 2"/>
+          <Card.Title title="Preset 1"/>
           <Card.Content>
-            <Text>4: {preset2.firstFlag}.</Text>
-            <Text>   Tijd tot strafvlag: {preset2.firstTime/60} minuut.</Text>
+            <Text>4: {preset2.flags[0].notification.toString()}.</Text>
+            <Text>   Tijd tot straf vlag {preset2.flags[0].time/60} minuten.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>3: {preset2.secondFlag}.</Text>
-            <Text>   Tijd tot straf vlag omlaag: {preset2.secondTime/60} minuut.</Text>
+            <Text>3: {preset2.flags[1].notification.toString()}.</Text>
+            <Text>   Tijd tot straf vlag omlaag: {preset2.flags[0].time/60} minuten.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>2: {preset2.thirdFlag}.</Text>
-            <Text>   Tijd tot klassenvlag omlaag: {preset2.thirdTime/60} minuut.</Text>
+            <Text>1: {preset2.flags[2].notification.toString()}.</Text>
+            <Text>   Tijd tot start: {preset2.flags[0].time/60} minuut.</Text>
             {/* <br/> */}
             <Text>{"\n"}</Text>
-            <Text>1: {preset2.fourthFlag}.</Text>
-            <Text>   Tijd tot start: {preset2.fourthTime/60} minuut.</Text>
+            <Text>0: {preset2.flags[3].notification.toString()}.</Text>
+            <Text>   Start.</Text>
 
             {/* button to change tthe preset for timer */}
             <Button  mode="contained"  onPress={setPreset2} 
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
             </Button>
-
           </Card.Content>
         </Card>
         
@@ -267,17 +278,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  heartRateTitleText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginHorizontal: 20,
-    color: "black",
-  },
-  heartRateText: {
-    fontSize: 25,
-    marginTop: 15,
-  },
+
+
   ctaButton: {
     backgroundColor: "#FF6060",
     justifyContent: "center",
