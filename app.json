@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ammielb.autodick3"
+      "package": "com.AutoDick4.autodick3"
     },
     "web": {
       "bundler": "metro",
