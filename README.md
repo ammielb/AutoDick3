@@ -20,33 +20,33 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
 
 ## Ble CODES
 
-00 series: toeter
+00 series: toeter \
     01:  1 kort \
-    02:  1 lang
+    02:  1 lang \
     
-10 series: oranjevlag
-    11:    30 seconde tot heisen
-    12:    10 second tot heisen
-    13:    5 second countdown heisen
-    14:    30 seconde tot strijken
-    15:    10 second tot strijken
-    16:    5 second countdown strijken
+10 series: oranjevlag \
+    11:    30 seconde tot heisen \
+    12:    10 second tot heisen \
+    13:    5 second countdown heisen \ 
+    14:    30 seconde tot strijken \
+    15:    10 second tot strijken \
+    16:    5 second countdown strijken \
 
-20 series: klassevlag
-    21:    30 seconde tot heisen
-    22:    10 second tot heisen
-    23:    5 second countdown heisen
-    24:    30 seconde tot strijken
-    25:    10 second tot strijken
-    26:    5 second countdown strijken
+20 series: klassevlag \
+    21:    30 seconde tot heisen \
+    22:    10 second tot heisen \
+    23:    5 second countdown heisen \
+    24:    30 seconde tot strijken \ 
+    25:    10 second tot strijken \ 
+    26:    5 second countdown strijken \
 
-30 series: procedurevlag
-    31:    30 seconde tot heisen
-    32:    10 second tot heisen
-    33:    5 second countdown heisen
-    34:    30 seconde tot strijken
-    35:    10 second tot strijken
-    36:    5 second countdown strijken
+30 series: procedurevlag \
+    31:    30 seconde tot heisen \
+    32:    10 second tot heisen \
+    33:    5 second countdown heisen \
+    34:    30 seconde tot strijken \
+    35:    10 second tot strijken \ 
+    36:    5 second countdown strijken \ 
 
 ## SD card sounds 
 
