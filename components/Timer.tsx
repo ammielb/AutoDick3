@@ -84,7 +84,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   };
 
   const notificationCountdown = (serieCode : number, remainingTime: number, heisen: number) =>{
-    //  check if the remaing time is 60 50 40 30 20 or 10 seconds
+    //  check if the remaing time is 60 50 40 30 20 10 0 seconds
 
       if(remainingTime % 5 == 0 ){
         let transmitData = serieCode + "" + remainingTime + "" +  heisen
@@ -92,6 +92,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
         if(connectedDevice != undefined){
           writeToDevice(connectedDevice,transmitData.toString());
         }
+        
       }
   }
   const handleUpdate = (remainingTime: number) =>{
@@ -102,17 +103,17 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       }
       switch(timesRun){
 
-        // voor de klassen vlag 
+        // voor de klassen vlag heisen
         case 0:
           notificationCountdown(2, remainingTime , 1);
           break;
 
-        //voor de procedure vlag
+        //voor de procedure vlag heisen
         case 1:
           notificationCountdown(3, remainingTime, 1);
           break;
 
-          // procedure vlag gaat in
+          //voor strijken procedure vlag
         case 2:
           notificationCountdown(3, remainingTime, 0);
           break;
