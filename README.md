@@ -1,19 +1,19 @@
 
-## if you want to change the admin account.
-1. in app.json and eas.json. change the owner to the new owner account.
-2. in app.json. change the project id to the new owners account ID. in their expo.dev account.
+## If you want to change the admin account.
+1. In app.json and eas.json. change the owner to the new owner account.
+2. In app.json. change the project id to the new owners account ID. in their expo.dev account.
 
 
 
-## show keystore and build credentials
-1.   use command 'eas credentials'
+## Show keystore and build credentials
+1. Use command 'eas credentials'
 
 
-## tutorial to turn this project into a APK
+## Tutorial to turn this project into a APK
 https://www.youtube.com/watch?v=3j9DcRCxrFg
 
 
-## script to make a build and get an APK in expo go
+## Script to make a build and get an APK in expo go
 ```
  eas build --profile preview  --platform android
 ```
