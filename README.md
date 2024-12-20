@@ -14,8 +14,9 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
 
 
 ## script to make a build and get an APK in expo go
+```
  eas build --profile preview  --platform android
-
+```
 
 ## Ble CODES
 
