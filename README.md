@@ -30,7 +30,7 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
     13:    5 second countdown heisen \
     14:    30 seconde tot strijken \
     15:    10 second tot strijken \
-    16:    5 second countdown strijken \
+    16:    5 second countdown strijken 
 
 20 series: klassevlag \
     21:    30 seconde tot heisen \
@@ -38,7 +38,7 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
     23:    5 second countdown heisen \
     24:    30 seconde tot strijken \
     25:    10 second tot strijken \
-    26:    5 second countdown strijken \
+    26:    5 second countdown strijken 
 
 30 series: procedurevlag \
     31:    30 seconde tot heisen \
@@ -46,7 +46,7 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
     33:    5 second countdown heisen \
     34:    30 seconde tot strijken \
     35:    10 second tot strijken \
-    36:    5 second countdown strijken \
+    36:    5 second countdown strijken 
 
 ## SD card sounds 
 
