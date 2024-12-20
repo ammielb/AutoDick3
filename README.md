@@ -46,3 +46,42 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
     34:    30 seconde tot strijken
     35:    10 second tot strijken
     36:    5 second countdown strijken
+
+## SD card sounds 
+
+Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere volgorde waar nog naar gekeken moet worden.
+
+    01. 30 seconden tot heisen uniformvlag
+    02. 10 seconden tot heisen uniformvlag
+    03. heisen uniformvlag
+    04. 30 seconden tot strijken uniformvlag
+    05. 10 seconden tot strijken uniformvlag
+    06. strijken uniformvlag
+    07. 30 seconden tot heisen zwartevlag
+    08. 30 seconden tot heisen klassenvlag
+    09. 10 seconden tot heisen klassenvlag
+    10. heisen klassenvlag
+    11. 30 seconden tot strijken klassenvlag
+    12. 10 seconden tot strijken klassenvlag
+    13. strijken klassenvlag
+    14. 30 seconden tot heisen papavlag
+    15. 10 seconden tot heisen papavlag
+    16. heisen papavlag
+    17. 30 seconden tot strijken papavlag
+    18. 10 seconden tot strijken papavlag
+    19. strijken papavlag
+    20. zwartevlag heisen
+    21. 10 seconden tot strijken zwartevlag
+    22. zwartevlag strijken
+    23. 60 seconden tot start
+    24. 50 seconden tot start
+    25. 40 seconden tot start
+    26. 20 seconden tot start
+    27. oranje vlag hijsen
+    28. oranje vlag strijken
+    29. 30 seconden tot strijken oranjevlag
+    30. 10 seconden tot strijken oranjevlag
+    31. 30 seconden tot heisen zwartevlag
+    32. 10 seconden tot heisen zwartevlag
+    33. 10 seconden tot heisen oranjevlag
+    34. 30 seconden tot heisen zwartevlag

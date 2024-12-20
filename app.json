@@ -4,7 +4,7 @@
     "owner": "autodick4",
     "slug": "autodick3",
     "version": "1.0.0",
-    "runtimeVersion": "1.0.0", // Set your runtime version explicitly
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -15,7 +15,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.AutoDick4.autodick3"
     },
     "android": {
       "adaptiveIcon": {
@@ -40,9 +41,6 @@
         "projectId": "cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
       }
     },
-    // "runtimeVersion": {
-    //   "policy": "appVersion"
-    // },
     "updates": {
       "url": "https://u.expo.dev/cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
     }

@@ -33,7 +33,6 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   const [amountOfFlags] = useState<number>(data.amountOfFlags);
   
 
-
   const {
     writeToDevice
   } = useBLE();
