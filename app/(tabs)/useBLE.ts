@@ -95,12 +95,12 @@ function useBLE(): BluetoothLowEnergyApi {
     devices.findIndex((device) => nextDevice.id === device.id) > -1;
 
   const scanForPeripherals = () =>
-    bleManager.startDeviceScan(null, null, (error, device) => {
+    bleManager.startDeviceScan([SERVICE_UUID], null, (error, device) => {
       if (error) {
         console.log(error);
       }
-
-
+  
+      // Using UUID as filter to improve identification
       if (device && device.name?.includes("AutoDick4")) {
         setAllDevices((prevState: Device[]) => {
           if (!isDuplicateDevice(prevState, device)) {
@@ -110,17 +110,24 @@ function useBLE(): BluetoothLowEnergyApi {
         });
       }
     });
+  
 
     const connectToDevice = async (device: Device) => {
       try {
         const deviceConnection = await bleManager.connectToDevice(device.id);
         setConnectedDevice(deviceConnection);
-        await deviceConnection.discoverAllServicesAndCharacteristics();
+    
+        await Promise.race([
+          deviceConnection.discoverAllServicesAndCharacteristics(),
+          new Promise((_, reject) => setTimeout(() => reject('Timeout'), 5000)), // 5-second timeout
+        ]);
+    
         bleManager.stopDeviceScan();
       } catch (e) {
         console.log("FAILED TO CONNECT", e);
       }
     };
+    
 
   const disconnectFromDevice = () => {
     if (connectedDevice) {

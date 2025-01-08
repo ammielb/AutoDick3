@@ -20,33 +20,35 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
 
 ## Ble CODES
 
-00 series: toeter \
-    01:  1 kort \
-    02:  1 lang 
-    
-10 series: oranjevlag \
-    11:    30 seconde tot heisen \
-    12:    10 second tot heisen \
-    13:    5 second countdown heisen \
-    14:    30 seconde tot strijken \
-    15:    10 second tot strijken \
-    16:    5 second countdown strijken 
 
-20 series: klassevlag \
-    21:    30 seconde tot heisen \
-    22:    10 second tot heisen \
-    23:    5 second countdown heisen \
-    24:    30 seconde tot strijken \
-    25:    10 second tot strijken \
-    26:    5 second countdown strijken 
+### 00 Series: Toeter
+- **01**: 1 kort  
+- **02**: 1 lang  
 
-30 series: procedurevlag \
-    31:    30 seconde tot heisen \
-    32:    10 second tot heisen \
-    33:    5 second countdown heisen \
-    34:    30 seconde tot strijken \
-    35:    10 second tot strijken \
-    36:    5 second countdown strijken 
+### 10 Series: Oranjevlag
+- **11**: 30 seconden tot hijsen  
+- **12**: 10 seconden tot hijsen  
+- **13**: 5 seconden countdown hijsen  
+- **14**: 30 seconden tot strijken  
+- **15**: 10 seconden tot strijken  
+- **16**: 5 seconden countdown strijken  
+
+### 20 Series: Klassevlag
+- **21**: 30 seconden tot hijsen  
+- **22**: 10 seconden tot hijsen  
+- **23**: 5 seconden countdown hijsen  
+- **24**: 30 seconden tot strijken  
+- **25**: 10 seconden tot strijken  
+- **26**: 5 seconden countdown strijken  
+
+### 30 Series: Procedurevlag
+- **31**: 30 seconden tot hijsen  
+- **32**: 10 seconden tot hijsen  
+- **33**: 5 seconden countdown hijsen  
+- **34**: 30 seconden tot strijken  
+- **35**: 10 seconden tot strijken  
+- **36**: 5 seconden countdown strijken  
+
 
 ## SD card sounds 
 
