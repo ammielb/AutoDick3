@@ -14,8 +14,10 @@ export default function Layout() {
       {/* Automatically maps to app/index.jsx */}
       <Stack.Screen name="index" options={{ title: 'index' }} />
 
-      {/* Automatically maps to app/other.jsx */}
+      {/* Automatically maps to app/Presets.jsx */}
       <Stack.Screen name="Presets" options={{ title: 'Presets' }} />
+
+      <Stack.Screen name="csvWriting" options={{ title: 'csvWriting'}} />
 
       </Stack>
   );

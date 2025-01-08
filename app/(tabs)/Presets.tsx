@@ -36,7 +36,7 @@ const Presets: React.FC = () => {
         <Button
           mode="contained"
           style={{ marginRight: 16, marginLeft: 16, width: 96 }}
-          onPress={() => router.replace('./../')}
+          onPress={() => router.replace('./csvWriting')}
         >
           Home
         </Button>

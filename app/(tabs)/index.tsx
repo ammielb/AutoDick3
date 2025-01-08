@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import Timer from '@/components/Timer';
 import DeviceModal from '@/components/DeviceConnectionModal';
-import useBLE from './useBLE';
+// import useBLE from './useBLE';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -59,32 +59,7 @@ export default function HomeScreen() {
   const [isDeviceTabVisible, setIsDeviceTabVisible] = useState<boolean>(false);
 
   // // Destructure values from useBLE and define types explicitly
-  const {
-    requestPermissions,
-    scanForPeripherals,
-    allDevices,
-    connectToDevice,
-    connectedDevice,
-    disconnectFromDevice,
-    writeToDevice
-  } = useBLE();
-
-
-  const scanForDevices = async () => {
-    const isPermissionsEnabled = await requestPermissions();
-    if (isPermissionsEnabled) {
-      scanForPeripherals();
-    }
-  };
-
-  const hideDeviceTab = () => {
-    setIsDeviceTabVisible(false);
-  };
-
-  const openDeviceTab= async () => {
-    await scanForDevices();
-    setIsDeviceTabVisible(true);
-  };
+  
 
 
 
@@ -117,93 +92,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView >
-    {/*  bluetooth connection button*/}
-    <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
-          {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
-      </Text>
 
-       <TouchableOpacity
-        onPress={connectedDevice ? disconnectFromDevice : openDeviceTab}
-        style={styles.ctaButton}
-      >
-        <Text style={styles.ctaButtonText}>
-          {connectedDevice ? "Disconnect" : "Connect"}
-        </Text>
-      </TouchableOpacity>
-
-
-{/* tab to show the available bluetotoh devices */}
-      <DeviceModal
-        closeModal={hideDeviceTab}
-        visible={isDeviceTabVisible}
-        connectToPeripheral={connectToDevice}
-        devices={allDevices}
-      /> 
-
-
-            {/* only uncomment this if you want tot test the page without the bluetooth. because bluetooth only works if you build it into an APK and run it on your phone.*/}
-
-      {/* <Text style={styles.labelText}>
-          {"Connect to a Bluetooth device"}
-      </Text>
-
-      <TouchableOpacity
-        onPress={()=>{}}
-        style={styles.ctaButton}
-      >
-        <Text style={styles.ctaButtonText}>
-          {"asdsadasd"}
-        </Text>
-      </TouchableOpacity>
-
-      <DeviceModal
-        closeModal={()=>{}}
-        visible={false}
-        connectToPeripheral={()=>{}}
-        devices={[]}
-      />  */}
-      {/* timer */}
-      <Timer ref={timerRef}  data={currentPreset} connectedDevice={connectedDevice}/>  
-
-      <Divider/>
-      {/*  toeter BZZZZZ */}
-      {/* if there is a BL devices connected display action keys for BL  */}
-        {connectedDevice  && (
-          <View style={{display:'flex', justifyContent:'space-between' ,flexDirection:'row'}} >
-
-          <Button 
-          mode="contained" 
-          onPress={()=>
-            {
-              try {
-                writeToDevice(connectedDevice, "02");
-              }catch(e){}
-            }
-          } 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-          long Press
-        </Button>
-
-  
-        <Button 
-          mode="contained" 
-          onPress={()=>
-            {
-              try {
-                writeToDevice(connectedDevice, "01");
-              }catch(e){}
-            }
-          } 
-          style={{ marginLeft: 16, marginRight: 16 }}
-        >
-         short Press
-        </Button>
-          
-    </View>
-  )}
-  <Divider/>
-  
 
 
 
@@ -260,8 +149,13 @@ export default function HomeScreen() {
           style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
               Set preset
             </Button>
+            <Button mode="contained" onPress={setPreset1}
+        style={{ marginTop: 16, marginLeft: 16, marginRight: 16, height: 50, width: 150 }}>
+            Move pages
+        </Button>
           </Card.Content>
         </Card>
+        
         
  
     </ScrollView>
