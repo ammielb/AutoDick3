@@ -1,45 +1,54 @@
-import { jsonToCSV, readRemoteFile } from 'react-native-csv';
+import { jsonToCSV } from 'react-native-csv';
 import * as FileSystem from 'expo-file-system';
-import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
+import React from 'react';
+import { Button } from 'react-native-paper';
+import { View } from 'react-native';
 
-export async function makeCSV() {
-
-    const jsonData = `[
-        {
-            "Column 1": "Name",
-            "column 2": "Surename",
-            "Column 3": "Email",
-            "Column 4": "Info"
-        }
-    ]`;
-    
-    const CSV = jsonToCSV(jsonData);
-
-    // Name file
-    const directoryUri = FileSystem.documentDirectory;
-    const fileUri = directoryUri + 'fromdata.csv';
-
-    //ask permission
-    const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-    if (perm.status != 'granted') {
-      console.log("Permission not Granted!")
-      return;
-    }
-    
-    // Write the file to system
-    FileSystem.writeAsStringAsync(fileUri, CSV)
-    
+export default function MakeCSV() {
+  const handleGenerateCSV = async () => {
     try {
-      const asset = await MediaLibrary.createAssetAsync(fileUri);
-      const album = await MediaLibrary.getAlbumAsync('forms');
-      console.log(album)
-      if (album == null) {
-        await MediaLibrary.createAlbumAsync('forms', asset, true);
-      } else {
-        await MediaLibrary.addAssetsToAlbumAsync([asset], album, true);
+      // JSON Data
+      const jsonData = [
+        {
+          "Column 1": "Name",
+          "Column 2": "Surname",
+          "Column 3": "Email",
+          "Column 4": "Info",
+        },
+      ];
+
+      // Convert JSON to CSV
+      const CSV = jsonToCSV(jsonData);
+
+      // Define file path
+      const fileUri = `${FileSystem.documentDirectory}fromdata.csv`;
+
+      // Request Permissions
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        console.error("Media Library permission not granted");
+        return;
       }
+
+      // Write File
+      await FileSystem.writeAsStringAsync(fileUri, CSV);
+      console.log("File written at:", fileUri);
+
+      // Save File to Media Library
+      const asset = await MediaLibrary.createAssetAsync(fileUri);
+      await MediaLibrary.createAlbumAsync("Forms", asset, false);
+      console.log("CSV saved successfully");
     } catch (error) {
-      console.log(error);
+      console.error("Error:", error);
     }
+  };
+
+  return (
+    <View>
+      <Button mode="contained" onPress={handleGenerateCSV}>
+        Generate CSV
+      </Button>
+    </View>
+  );
 }
