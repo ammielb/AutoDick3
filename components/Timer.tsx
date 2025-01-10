@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-timer';
 import { Card } from 'react-native-paper';
-
+import { appendToCSV } from './../app/(tabs)/csvWriting';
 
 
 export type Props = {
@@ -90,6 +90,7 @@ const Timer = forwardRef (({data}: Props, ref) => {
           setCurrentFlag(data.secondFlag); // 1 -> 2
           setNextFlag(data.thirdFlag); // 2 -> 3
           setDuration(data.secondTime);
+          appendToCSV(data.firstFlag, "1");
           break;
         case 1: //na tweede complete vlag 2 -> vlag 3
           setCurrentFlag(data.thirdFlag); // 2 -> 3

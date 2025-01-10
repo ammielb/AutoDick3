@@ -4,7 +4,6 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Text, Card } from 'react-native-paper';
 import Timer from '@/components/Timer';  // Import Timer component
 import { StyleSheet, View, ScrollView } from 'react-native';
-
 interface JsonData {
   amountOfFlags: number;
   firstFlag: string;

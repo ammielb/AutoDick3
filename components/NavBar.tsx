@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRouter, useSegments } from 'expo-router';
 import { Appbar, Button } from 'react-native-paper';
 import { Text } from 'react-native-paper';
+import { downloadCSV } from './../app/(tabs)/csvWriting';
 
 export function NavBar() {
   const router = useRouter();
@@ -19,8 +20,8 @@ export function NavBar() {
 
   // Check if we are on the "Home" screen (index) or "Presets" screen
   // const isHomeScreen = segments.includes('index');
-  const isPresetsScreen = segments.includes("Presets");
-  console.log(isPresetsScreen)
+  // const isPresetsScreen = segments.includes("Presets");
+  // console.log(isPresetsScreen)
 
   return (
     <Appbar.Header style={{ display: 'flex', justifyContent: 'center' }} mode="small">
@@ -28,8 +29,8 @@ export function NavBar() {
       <Appbar.Content titleStyle={{ textAlign: 'center' }} title="AutoDick" />
 
 
-        <Button mode="contained" onPress={ (isPresetsScreen) ? ()=>{ router.replace('./') }: ()=>{ router.replace('./Presets') } } style={{ marginLeft: 16, marginRight: 16 }}>
-          Presets
+        <Button mode="contained" onPress={ downloadCSV } style={{ marginLeft: 16, marginRight: 16 }}>
+          Download csv
         </Button>
 
 
