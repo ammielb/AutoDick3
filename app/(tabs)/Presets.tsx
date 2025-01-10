@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Text } from 'react-native-paper';
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { appendToCSV, downloadCSV } from './csvWriting';
 
 const Presets: React.FC = () => {
   const router = useRouter();
@@ -44,11 +45,11 @@ const Presets: React.FC = () => {
 
       <Button 
         mode="contained" 
-        onPress={() => setVlaggen(["papa", "Opa", "geel"])}
+        onPress={() => appendToCSV("papa", "1")}
       >
         Hoeren Knop
       </Button>
-      <Button mode="contained" onPress={savePreset}>
+      <Button mode="contained" onPress={downloadCSV}>
         Save Preset
       </Button>
     </View>

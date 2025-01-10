@@ -4,6 +4,7 @@ import { CountdownCircleTimer, TimeProps } from 'react-native-countdown-circle-t
 import { Card } from 'react-native-paper';
 import useBLE from '../app/(tabs)/useBLE';
 import {Device} from "react-native-ble-plx";
+import { appendToCSV } from './../app/(tabs)/csvWriting';
 interface flags{
   notification:String,
   time:number

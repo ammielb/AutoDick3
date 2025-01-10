@@ -1,59 +1,59 @@
-import React, { useState } from 'react';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
-export default function CsvAppendingScreen(){
-  const fileUri = `${FileSystem.documentDirectory}Race_${new Date().toISOString().slice(0, 10)}.csv`;
-  const [logMessage, setLogMessage] = useState("");
+// Bestandspad dynamisch met datum
+const getFileUri = () => 
+  `${FileSystem.documentDirectory}Race_${new Date().toISOString().slice(0, 10)}.csv`;
 
-  const appendToCSV = async () => {
-    try{
+// Functie om een regel toe te voegen aan een CSV-bestand
+export const appendToCSV = async (vlag: string, klassen: string) => {
+  const fileUri = getFileUri();
 
-      //check if file exists
-      const fileExists = await FileSystem.getInfoAsync(fileUri);
+  try {
+    // Controleer of het bestand al bestaat
+    const fileExists = await FileSystem.getInfoAsync(fileUri);
 
-      let updateContent;
+    let updateContent;
 
-      if (fileExists.exists){
-        //read file info
-        const existingContent = await FileSystem.readAsStringAsync(fileUri);
+    if (fileExists.exists) {
+      // Bestaande inhoud lezen
+      const existingContent = await FileSystem.readAsStringAsync(fileUri);
 
-        //add new line
-        const newLine = `Nieuwe vlag, ${new Date().toLocaleTimeString()}, Klasse ${Math.floor(Math.random() * 10)}`;
-        updateContent = `${existingContent}\n${newLine}`
-      }else{
-        //make new file
-        updateContent = "Vlag, Tijd, Klasse\n Nieuwe vlag, 18:30, Klassen 1";
-      }
-
-      //write new lines to file
-      await FileSystem.writeAsStringAsync(fileUri, updateContent,{
-        encoding: FileSystem.EncodingType.UTF8,
-      });
-      setLogMessage(`nieuwe regel toegevoegd:\n${fileUri}`);
-      console.log("Nieuwe inhoud:\n", updateContent);
-    }catch (e){
-      console.error("Fout bij toevoegen aan CSV:", e);
-      setLogMessage("Er is een fout opgetreden.");
+      // Nieuwe regel toevoegen
+      const newLine = `${vlag}, ${new Date().toLocaleTimeString()}, ${klassen}`;
+      updateContent = `${existingContent}\n${newLine}`;
+    } else {
+      // Nieuw bestand met header maken
+      const newLine = `${vlag}, ${new Date().toLocaleTimeString()}, ${klassen}`;
+      updateContent = `Vlag, Tijd, Klasse\n${newLine}`;
     }
-  };
 
-  const downloadCSV = async () => {
-    try{
-      //download or share file
-      const fileExists = await FileSystem.getInfoAsync(fileUri);
+    // De inhoud schrijven naar het bestand
+    await FileSystem.writeAsStringAsync(fileUri, updateContent, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
 
-      if(fileExists.exists){
-        await Sharing.shareAsync(fileUri);
-        setLogMessage("File sharred");
-      }else{
-        setLogMessage("No csv file to share");
-      }
-    }catch(e){
-      console.log(e);
+    console.log(`Regel toegevoegd:\n${fileUri}`);
+  } catch (e) {
+    console.error("Fout bij toevoegen aan CSV:", e);
+  }
+};
+
+// Functie om een CSV-bestand te downloaden (delen)
+export const downloadCSV = async () => {
+  const fileUri = getFileUri();
+
+  try {
+    // Bestand delen als het bestaat
+    const fileExists = await FileSystem.getInfoAsync(fileUri);
+
+    if (fileExists.exists) {
+      await Sharing.shareAsync(fileUri);
+      console.log("Bestand gedeeld:", fileUri);
+    } else {
+      console.warn("CSV-bestand bestaat niet, kan niet delen.");
     }
-  };
-
-
-  
-}
+  } catch (e) {
+    console.error("Fout bij delen van het bestand:", e);
+  }
+};

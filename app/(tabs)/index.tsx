@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import Timer from '@/components/Timer';
 import DeviceModal from '@/components/DeviceConnectionModal';
+import { downloadCSV } from './csvWriting';
 // import useBLE from './useBLE';
 import {
   StyleSheet,
