@@ -107,21 +107,25 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
         // voor de klassen vlag heisen
         case 0:
           notificationCountdown(2, remainingTime , 1);
+          appendToCSV(currentFlag, "1");
           break;
 
         //voor de procedure vlag heisen
         case 1:
           notificationCountdown(3, remainingTime, 1);
+          appendToCSV(currentFlag, "1");
           break;
 
           //voor strijken procedure vlag
         case 2:
           notificationCountdown(3, remainingTime, 0);
+          appendToCSV(currentFlag, "1");
           break;
 
           //start van race
         case 3:
           notificationCountdown(2, remainingTime, 0);
+          appendToCSV(currentFlag, "1");
           break;
         
         //na de klassen en voor de proceduren vlag 

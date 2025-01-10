@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRouter, useSegments } from 'expo-router';
 import { Appbar, Button } from 'react-native-paper';
 import { Text } from 'react-native-paper';
+import { downloadCSV } from './../app/(tabs)/csvWriting';
 
 export function NavBar() {
   const router = useRouter();
@@ -24,8 +25,8 @@ export function NavBar() {
   const displayNavButtons = () =>{
     if(segments[1] == undefined  ){
       return (
-        <Button mode="contained" onPress={()=>{ router.replace('./Presets') } } style={{ marginLeft: 16, marginRight: 16 }}>
-          Presets
+        <Button mode="contained" onPress={()=>{ downloadCSV } } style={{ marginLeft: 16, marginRight: 16 }}>
+          Download CSV
         </Button>
       )
     }
