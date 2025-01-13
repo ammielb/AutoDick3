@@ -1,34 +1,34 @@
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
-// Bestandspad dynamisch met datum
+// Create filename with coresponding date in name
 const getFileUri = () => 
   `${FileSystem.documentDirectory}Race_${new Date().toISOString().slice(0, 10)}.csv`;
 
-// Functie om een regel toe te voegen aan een CSV-bestand
+// Function to add line
 export const appendToCSV = async (vlag: string, klassen: string) => {
   const fileUri = getFileUri();
 
   try {
-    // Controleer of het bestand al bestaat
+    // Check if file exists
     const fileExists = await FileSystem.getInfoAsync(fileUri);
 
     let updateContent;
 
     if (fileExists.exists) {
-      // Bestaande inhoud lezen
+      // Read file
       const existingContent = await FileSystem.readAsStringAsync(fileUri);
 
-      // Nieuwe regel toevoegen
+      // Add line
       const newLine = `${vlag}, ${new Date().toLocaleTimeString()}, ${klassen}`;
       updateContent = `${existingContent}\n${newLine}`;
     } else {
-      // Nieuw bestand met header maken
+      // Create file
       const newLine = `${vlag}, ${new Date().toLocaleTimeString()}, ${klassen}`;
       updateContent = `Vlag, Tijd, Klasse\n${newLine}`;
     }
 
-    // De inhoud schrijven naar het bestand
+    // Write line to file
     await FileSystem.writeAsStringAsync(fileUri, updateContent, {
       encoding: FileSystem.EncodingType.UTF8,
     });
@@ -39,12 +39,12 @@ export const appendToCSV = async (vlag: string, klassen: string) => {
   }
 };
 
-// Functie om een CSV-bestand te downloaden (delen)
+// Function to download file
 export const downloadCSV = async () => {
   const fileUri = getFileUri();
 
   try {
-    // Bestand delen als het bestaat
+    // Download file if exists
     const fileExists = await FileSystem.getInfoAsync(fileUri);
 
     if (fileExists.exists) {
@@ -53,7 +53,7 @@ export const downloadCSV = async () => {
     } else {
       console.warn("CSV-bestand bestaat niet, kan niet delen.");
     }
-  } catch (e) {
+  } catch (e) { //else error
     console.error("Fout bij delen van het bestand:", e);
   }
 };

@@ -13,7 +13,7 @@ export function NavBar() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrTime(new Date().toLocaleTimeString());
-    }, 1000); // update every 1 second
+    }, 1000); // update every second
 
     return () => clearInterval(interval); // cleanup interval on component unmount
   }, []);
@@ -26,14 +26,14 @@ export function NavBar() {
     if(segments[1] == undefined  ){
       return (
         <Button mode="contained" onPress={downloadCSV } style={{ marginLeft: 16, marginRight: 16 }}>
-          Presets
+          Download tijden
         </Button>
       )
     }
 
     return (
       <Button mode="contained" onPress={ downloadCSV } style={{ marginLeft: 16, marginRight: 16 }}>
-      Home
+      Dowhload tijden
     </Button>
     )
   }

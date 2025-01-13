@@ -107,7 +107,6 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
         // voor de klassen vlag heisen
         case 0:
           notificationCountdown(2, remainingTime , 1);
-          appendToCSV(currentFlag, "1");
           break;
 
         //voor de procedure vlag heisen
@@ -143,16 +142,18 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       // 
       if(data.flags[timesRun+1] != undefined){
         currentFlag = data.flags[timesRun+1].notification.toString();
+        appendToCSV(data.flags[timesRun].notification.toString(), "1");   // Write flag data to csv file (csvWriting)
         duration=data.flags[timesRun+1].time;
       }else{
         currentFlag = " "
+        appendToCSV(currentFlag, "1");    // Write flag data to csv file (csvWriting)
         duration=0;
       }
       
       if (data.flags[timesRun+2] != undefined){
         nextFlag = data.flags[timesRun+2].notification.toString()
       }else{
-        nextFlag=" ";
+        nextFlag="Start";
       }
     
       setCurrentFlag(currentFlag); 
@@ -162,6 +163,12 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 
       setTime((prevtime)=> prevtime + 1);
       return{ shouldRepeat: true};
+    } else{
+      let currentFlag
+      currentFlag = "Start";
+      setCurrentFlag(currentFlag);
+      appendToCSV(data.flags[timesRun].notification.toString(), "1");
+      appendToCSV(currentFlag, "1");    // Write flag data to csv file (csvWriting)
     }
     return { shouldRepeat: false };
   };
