@@ -48,6 +48,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 
   const resetTimer = () => {
     setIsPlaying(false);
+    appendToCSV("\n Start nieuwe race\n", "1");    // Write flag data to csv file (csvWriting)
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(data.flags[0].time); // Reset to initial time
     setTimesRun(0);
@@ -151,7 +152,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       }
       
       if (data.flags[timesRun+2] != undefined){
-        nextFlag = data.flags[timesRun+2].notification.toString()
+        nextFlag = data.flags[timesRun+2].notification.toString();
       }else{
         nextFlag="Start";
       }
@@ -159,8 +160,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       setCurrentFlag(currentFlag); 
       setNextFlag(nextFlag); 
       setDuration(duration);
-
-
+      
       setTime((prevtime)=> prevtime + 1);
       return{ shouldRepeat: true};
     } else{
