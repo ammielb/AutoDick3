@@ -10,10 +10,12 @@ interface flags{
 }
 export type Props = {
 data:{
-  amountOfFlags: number;
-  flags: flags[]
+  // name: String,
+  amountOfFlags: number,
+  // klassenvlag: String,
+  flags: flags[],
   start:String
-}
+},
 connectedDevice : Device | null
   
 };
@@ -170,8 +172,8 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   return (
     <Card style={styles.container}>
       <Card.Content>
-        <Text style={styles.labelText}>Now: {currentFlag}</Text>
-        <Text style={styles.flagText}>Next: {nextFlag}</Text>
+        <Text style={styles.labelText}>Nu: {currentFlag}</Text>
+        <Text style={styles.flagText}>Volgende: {nextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}

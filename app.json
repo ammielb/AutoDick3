@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "AutoDick3",
-    "owner": "autodick4",
-    "slug": "autodick3",
+    "owner": "autodick",
+    "slug": "autodick4",
     "version": "1.0.0",
-    "runtimeVersion": "1.0.0", // Set your runtime version explicitly
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -37,12 +37,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
+        "projectId": "ebaab792-9884-4556-aaa7-00a523a6b243"
+      },
+      "router": {
+        "origin": false
       }
     },
-    // "runtimeVersion": {
-    //   "policy": "appVersion"
-    // },
     "updates": {
       "url": "https://u.expo.dev/cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
     }
