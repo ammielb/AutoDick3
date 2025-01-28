@@ -10,10 +10,8 @@ interface flags{
 }
 export type Props = {
 data:{
-  // name: String,
-  amountOfFlags: number,
-  // klassenvlag: String,
-  flags: flags[],
+  amountOfFlags: number;
+  flags: flags[]
   start:String
 },
 connectedDevice : Device | null
