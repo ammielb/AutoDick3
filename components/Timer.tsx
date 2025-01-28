@@ -29,7 +29,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   const [label] = useState<string>("Now: " );
   const [flag] = useState<string>("Next: " );
   const [timerCounter, setTimerCounter] = useState<number>(1);
-  const [ currentFlag, setCurrentFlag ] = useState<string>(data.flags[0].notification.toString());
+  const [    currentFlag, setCurrentFlag ] = useState<string>(data.flags[0].notification.toString());
   const [ nextFlag, setNextFlag] = useState<string>(data.flags[1].notification.toString());
   const [timesRun, setTimesRun] = useState<number>(0);
   const [amountOfFlags] = useState<number>(data.amountOfFlags);

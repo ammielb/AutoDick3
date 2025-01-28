@@ -43,8 +43,8 @@ const preset1: JsonData = {
   klassenvlag: 'uniform',
   flags: [
     {notification: 'klassenvlag hijsen',time: 60},
-    {notification: 'Straf vlag hijsen',time: 180},
-    {notification: 'Straf vlag strijken',time: 60},
+    {notification: 'Uniform vlag hijsen',time: 180},
+    {notification: 'Uniform vlag strijken',time: 60},
     {notification: 'Klassenvlag strijken' ,time: 60},
   ],
   start: 'start'
@@ -55,8 +55,8 @@ const preset2: JsonData = {
   klassenvlag:'uniform',
   flags: [
     {notification: 'klassenvlag hijsen',time: 60},
-    {notification: 'Straf vlag hijsen',time: 60},
-    {notification: 'Straf vlag strijken',time: 60},
+    {notification: 'Uniform vlag hijsen',time: 60},
+    {notification: 'Uniform vlag strijken',time: 60},
     {notification: 'Klassenvlag strijken' ,time: 1},
   ],
   start: 'start'
@@ -67,8 +67,8 @@ const preset2: JsonData = {
 export default function HomeScreen() {
   const router = useRouter();
   const timerRef = useRef<any>(null);  // Create a ref to access Timer component
-  const [flagPreset1, setFlagPreset1] = React.useState('first');
-  const [flagPreset2, setFlagPreset2] = React.useState('first');
+  const [flagPreset1, setFlagPreset1] = React.useState('Uniform');
+  const [flagPreset2, setFlagPreset2] = React.useState('Uniform');
   const [currTime, setCurrTime] = useState<string>(new Date().toLocaleTimeString());
   const [currentPreset, setCurrentPreset] = useState<JsonData>(preset1);
   const [isDeviceTabVisible, setIsDeviceTabVisible] = useState<boolean>(false);
@@ -113,9 +113,6 @@ export default function HomeScreen() {
   };
 
   const setPreset1 = () => {
-    preset1.klassenvlag = flagPreset1;
-    preset1.flags[1].notification = flagPreset1 + " hijsen";
-    preset1.flags[2].notification = flagPreset1 + " strijken";
     setCurrentPreset(preset1);
     timerRef.current.resetTimer();
   };
@@ -237,15 +234,15 @@ export default function HomeScreen() {
 
       {/* preset lists */}
       <Card style={styles.card}>
-        <Card.Title title="Preset 1" />
+        <Card.Title  style={styles.cardTitle} title="Preset 1" />
         <Card.Content>
           <View style={styles.row}>
             <View style={styles.column}>
               <Text>5: {preset1.flags[0].notification.toString()}.</Text>
               <Text>   Tijd tot straf vlag {preset1.flags[0].time / 60} minuten.</Text>
               <Text>{"\n"}</Text>
-              <Text>4: {preset1.flags[1].notification.toString()}.</Text>
-              <Text>   Tijd tot straf vlag omlaag: {preset1.flags[0].time / 60} minuten.</Text>
+              <Text>   Tijd tot straf vlag omlaag:</Text> 
+              <Text>{preset1.flags[0].time / 60} minuten.</Text> 
               <Text>{"\n"}</Text>
               <Text>1: {preset1.flags[2].notification.toString()}.</Text>
               <Text>   Tijd tot start: {preset1.flags[0].time / 60} minuut.</Text>
@@ -255,25 +252,32 @@ export default function HomeScreen() {
             </View>
             <View>
               <Text>{"Selecteer een straf vlag"}</Text>
-              <RadioButton.Group onValueChange={newValue => setFlagPreset1(newValue)} value={flagPreset1}>
+
+              <RadioButton.Group onValueChange={newValue => {
+                  setFlagPreset1(newValue)
+                  preset1.klassenvlag = flagPreset1;
+                  preset1.flags[1].notification = flagPreset1 + " hijsen";
+                  preset1.flags[2].notification = flagPreset1 + " strijken";
+                }} value={flagPreset1}
+                >
                 <View style={styles.RadioButtonItem}>
                   <RadioButton
-                    value="uniform"
-                    status={flagPreset1 === 'uniform' ? 'checked' : 'unchecked'}
+                    value="Uniform"
+                    status={flagPreset1 === 'Uniform' ? 'checked' : 'unchecked'}
                   />
                   <Text>uniform</Text>
                 </View>
                 <View style={styles.RadioButtonItem}>
                   <RadioButton.Android
-                    value="zwart"
-                    status={flagPreset1 === 'zwart' ? 'checked' : 'unchecked'}
+                    value="Zwart"
+                    status={flagPreset1 === 'Zwart' ? 'checked' : 'unchecked'}
                   />
                   <Text>Zwart</Text>
                 </View>
                 <View style={styles.RadioButtonItem}>
                   <RadioButton.Android
-                    value="papa"
-                    status={flagPreset1 === 'papa' ? 'checked' : 'unchecked'}
+                    value="Papa"
+                    status={flagPreset1 === 'Papa' ? 'checked' : 'unchecked'}
                   />
                   <Text>Papa</Text>
                 </View>
@@ -287,7 +291,7 @@ export default function HomeScreen() {
       </Card>
 
       <Card style={styles.card}>
-        <Card.Title title="Preset 2" />
+        <Card.Title style={styles.cardTitle} title="Preset 2" />
         <Card.Content>
           <View style={styles.row}>
             <View style={styles.column}>
@@ -295,7 +299,8 @@ export default function HomeScreen() {
               <Text>   Tijd tot straf vlag {preset2.flags[0].time / 60} minuten.</Text>
               <Text>{"\n"}</Text>
               <Text>3: {preset2.flags[1].notification.toString()}.</Text>
-              <Text>   Tijd tot straf vlag omlaag: {preset2.flags[0].time / 60} minuten.</Text>
+              <Text>   Tijd tot straf vlag omlaag:</Text> 
+              <Text>{preset2.flags[0].time / 60} minuten.</Text> 
               <Text>{"\n"}</Text>
               <Text>1: {preset2.flags[2].notification.toString()}.</Text>
               <Text>   Tijd tot start: {preset2.flags[0].time / 60} minuut.</Text>
@@ -305,25 +310,30 @@ export default function HomeScreen() {
             </View>
             <View>
               <Text>{"Selecteer een straf vlag"}</Text>
-              <RadioButton.Group onValueChange={newValue => setFlagPreset2(newValue)} value={flagPreset2}>
+              <RadioButton.Group onValueChange={newValue => {
+                  setFlagPreset2(newValue)
+                  preset2.klassenvlag = flagPreset1;
+                  preset2.flags[1].notification = flagPreset2 + " hijsen";
+                  preset2.flags[2].notification = flagPreset2 + " strijken";
+                }} value={flagPreset2}  >
                 <View style={styles.RadioButtonItem}>
                   <RadioButton
-                    value="uniform"
-                    status={flagPreset2 === 'uniform' ? 'checked' : 'unchecked'}
+                    value="Uniform"
+                    status={flagPreset2 === 'Uniform' ? 'checked' : 'unchecked'}
                   />
                   <Text>uniform</Text>
                 </View>
                 <View style={styles.RadioButtonItem}>
                   <RadioButton.Android
-                    value="zwart"
-                    status={flagPreset2 === 'zwart' ? 'checked' : 'unchecked'}
+                    value="Zwart"
+                    status={flagPreset2 === 'Zwart' ? 'checked' : 'unchecked'}
                   />
                   <Text>Zwart</Text>
                 </View>
                 <View style={styles.RadioButtonItem}>
                   <RadioButton.Android
-                    value="papa"
-                    status={flagPreset2 === 'papa' ? 'checked' : 'unchecked'}
+                    value="Papa"
+                    status={flagPreset2 === 'Papa' ? 'checked' : 'unchecked'}
                   />
                   <Text>Papa</Text>
                 </View>
@@ -365,11 +375,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 5,
     borderRadius: 8,
+    width: "100%",
+    textAlign: "center",
   },
   ButtonText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
+    width: "100%",
     // marginLeft:20,
   },
   labelText: {
@@ -388,10 +401,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  cardTitle:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    alignSelf:'center',
+    textAlign: 'center',
+  },
   card: {
     marginTop: 16,
     width: '100%',
     alignItems: 'center',
+    
   },
   row: {
     flexDirection: 'row',
