@@ -31,7 +31,7 @@ interface flags{
 interface JsonData{
   name: String,
   amountOfFlags: number;
-  klassenvlag: String,
+  flagSerieCode: number,
   flags: flags[],
   start:String
 }
@@ -40,24 +40,24 @@ interface JsonData{
 const preset1: JsonData = {
   name : 'preset1',
   amountOfFlags: 4,
-  klassenvlag: 'uniform',
+  flagSerieCode:0,
   flags: [
-    {notification: 'klassenvlag hijsen',time: 60},
+    {notification: 'klassen vlag hijsen',time: 60},
     {notification: 'Uniform vlag hijsen',time: 180},
     {notification: 'Uniform vlag strijken',time: 60},
-    {notification: 'Klassenvlag strijken' ,time: 60},
+    {notification: 'Klassen vlag strijken' ,time: 60},
   ],
   start: 'start'
 };
 const preset2: JsonData = {
   name: 'preset2',
   amountOfFlags: 4,
-  klassenvlag:'uniform',
+  flagSerieCode:0,
   flags: [
-    {notification: 'klassenvlag hijsen',time: 60},
+    {notification: 'klassen vlag hijsen',time: 60},
     {notification: 'Uniform vlag hijsen',time: 60},
     {notification: 'Uniform vlag strijken',time: 60},
-    {notification: 'Klassenvlag strijken' ,time: 1},
+    {notification: 'Klassen vlag strijken' ,time: 1},
   ],
   start: 'start'
 };
@@ -72,6 +72,8 @@ export default function HomeScreen() {
   const [currTime, setCurrTime] = useState<string>(new Date().toLocaleTimeString());
   const [currentPreset, setCurrentPreset] = useState<JsonData>(preset1);
   const [isDeviceTabVisible, setIsDeviceTabVisible] = useState<boolean>(false);
+
+  const flagTable = ['Geen vlag geselecteerd','Uniform', 'Zwart', 'Papa'];
 
   // Destructure values from useBLE and define types explicitly
   const {
@@ -118,9 +120,6 @@ export default function HomeScreen() {
   };
 
   const setPreset2 = () => {
-    preset2.klassenvlag = flagPreset2;
-    preset2.flags[1].notification = flagPreset2 + " hijsen";
-    preset2.flags[2].notification = flagPreset2 + " strijken";
     setCurrentPreset(preset2);
     timerRef.current.resetTimer();
   };
@@ -134,32 +133,9 @@ export default function HomeScreen() {
   }, []);
 
   return (
-
-    <ScrollView >
-    {/*  bluetooth connection button*/}
-    <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
-          {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
-      </Text>
-
-       <TouchableOpacity
-        onPress={connectedDevice ? disconnectFromDevice : openDeviceTab}
-        style={styles.Button}
-      >
-        <Text style={styles.ButtonText}>
-          {connectedDevice ? "Disconnect" : "Connect"}
-        </Text>
-      </TouchableOpacity>
-
-
-{/* tab to show the available bluetotoh devices */}
-      <DeviceModal
-        closeModal={hideDeviceTab}
-        visible={isDeviceTabVisible}
-        connectToPeripheral={connectToDevice}
-        devices={allDevices}
-      /> 
-
-
+<View style={{flex: 1}}>
+    <ScrollView style={styles.scrollViewStyling} >
+ 
             {/* only uncomment this if you want tot test the page without the bluetooth. because bluetooth only works if you build it into an APK and run it on your phone.*/}
 
       {/* <Text style={styles.labelText}>
@@ -182,9 +158,7 @@ export default function HomeScreen() {
         devices={[]}
       />  */}
       {/* timer */}
-      <Text style={styles.presetText}>
-            {currentPreset.name ==undefined ? "Geen preset geselecteerd." : "De huidige Preset is: " + currentPreset.name+"."}
-        </Text>
+      
       <Timer ref={timerRef}  data={currentPreset} connectedDevice={connectedDevice}/>  
 
       <Divider/>
@@ -255,7 +229,7 @@ export default function HomeScreen() {
 
               <RadioButton.Group onValueChange={newValue => {
                   setFlagPreset1(newValue)
-                  preset1.klassenvlag = flagPreset1;
+                  preset1.flagSerieCode = flagTable.indexOf(flagPreset2);
                   preset1.flags[1].notification = flagPreset1 + " hijsen";
                   preset1.flags[2].notification = flagPreset1 + " strijken";
                 }} value={flagPreset1}
@@ -290,7 +264,7 @@ export default function HomeScreen() {
         </Card.Content>
       </Card>
 
-      <Card style={styles.card}>
+      <Card style={styles.card} >
         <Card.Title style={styles.cardTitle} title="Preset 2" />
         <Card.Content>
           <View style={styles.row}>
@@ -312,7 +286,7 @@ export default function HomeScreen() {
               <Text>{"Selecteer een straf vlag"}</Text>
               <RadioButton.Group onValueChange={newValue => {
                   setFlagPreset2(newValue)
-                  preset2.klassenvlag = flagPreset1;
+                  preset2.flagSerieCode = flagTable.indexOf(flagPreset2);
                   preset2.flags[1].notification = flagPreset2 + " hijsen";
                   preset2.flags[2].notification = flagPreset2 + " strijken";
                 }} value={flagPreset2}  >
@@ -348,6 +322,37 @@ export default function HomeScreen() {
         
  
     </ScrollView>
+
+    <View style={styles.footerContainer}>
+       {/*  bluetooth connection button*/}
+       <Text  style={{ color: 'black', marginLeft: 8, justifyContent: 'center' }}>
+          {connectedDevice ? "connected to "+ connectedDevice.name : "Connect to a Bluetooth device"}
+      </Text>
+
+       <TouchableOpacity
+        onPress={connectedDevice ? disconnectFromDevice : openDeviceTab}
+        style={styles.Button}
+      >
+        <Text style={styles.ButtonText}>
+          {connectedDevice ? "Disconnect" : "Connect"}
+        </Text>
+      </TouchableOpacity>
+
+
+{/* tab to show the available bluetotoh devices */}
+      <DeviceModal
+        closeModal={hideDeviceTab}
+        visible={isDeviceTabVisible}
+        connectToPeripheral={connectToDevice}
+        devices={allDevices}
+      /> 
+
+<Text style={styles.presetText}>
+            {currentPreset.name ==undefined ? "Geen preset geselecteerd." : "De huidige Preset is: " + currentPreset.name+"."}
+        </Text>
+    </View>
+
+</View>
   );
 }
 
@@ -375,7 +380,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 5,
     borderRadius: 8,
-    width: "100%",
+    // width: "100%",
     textAlign: "center",
   },
   ButtonText: {
@@ -383,7 +388,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     width: "100%",
-    // marginLeft:20,
+    alignSelf: "center",
+    marginLeft:20,
   },
   labelText: {
     fontSize: 24,
@@ -421,5 +427,14 @@ const styles = StyleSheet.create({
   column: {
     // flexDirection: 'collumn',
     justifyContent: 'center',
+  },
+  footerContainer: {
+    backgroundColor: '#ebebeb',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  scrollViewStyling: {
+    flexGrow: 1,
+    paddingBottom: 80, // Prevents the footer from covering content
   },
 });
