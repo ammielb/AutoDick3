@@ -60,7 +60,7 @@ Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere
     04. 30 seconden tot strijken uniformvlag
     05. 10 seconden tot strijken uniformvlag
     06. strijken uniformvlag
-    07. 30 seconden tot heisen zwartevlag
+    07. 30 seconden tot strijken zwartevlag
     08. 30 seconden tot heisen klassenvlag
     09. 10 seconden tot heisen klassenvlag
     10. heisen klassenvlag
@@ -82,9 +82,9 @@ Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere
     26. 20 seconden tot start
     27. oranje vlag hijsen
     28. oranje vlag strijken
-    29. 30 seconden tot strijken oranjevlag
+    29. 30 seconden tot strijken oranjevlag 
     30. 10 seconden tot strijken oranjevlag
     31. 30 seconden tot heisen zwartevlag
     32. 10 seconden tot heisen zwartevlag
     33. 10 seconden tot heisen oranjevlag
-    34. 30 seconden tot heisen zwartevlag
+    34. 30 seconden tot heisen oranjevlag
