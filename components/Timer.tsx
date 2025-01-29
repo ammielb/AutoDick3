@@ -11,10 +11,11 @@ interface flags{
 }
 export type Props = {
 data:{
-  amountOfFlags: number;
-  flags: flags[]
+  amountOfFlags: number,
+  flagSerieCode: number,
+  flags: flags[],
   start:String
-}
+},
 connectedDevice : Device | null
   
 };
@@ -28,8 +29,8 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   const [label] = useState<string>("Now: " );
   const [flag] = useState<string>("Next: " );
   const [timerCounter, setTimerCounter] = useState<number>(1);
-  const [ currentFlag, setCurrentFlag ] = useState<string>(data.flags[0].notification.toString());
-  const [ nextFlag, setNextFlag] = useState<string>(data.flags[1].notification.toString());
+  const [currentFlag, setCurrentFlag ] = useState<string>(data.flags[0].notification.toString());
+  const [nextFlag, setNextFlag] = useState<string>(data.flags[1].notification.toString());
   const [timesRun, setTimesRun] = useState<number>(0);
   const [amountOfFlags] = useState<number>(data.amountOfFlags);
   
@@ -38,6 +39,11 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
     writeToDevice
   } = useBLE();
 
+// 
+// 
+// all onclick functions for the buttons 
+//   
+//
   const startTimer = () => {
     setIsPlaying(true);
   };
@@ -50,7 +56,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
     setIsPlaying(false);
     appendToCSV("\n Start nieuwe race\n", "1");    // Write flag data to csv file (csvWriting)
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
-    setDuration(data.flags[0].time); // Reset to initial time
+    setDuration(data.flags[0].time + 1); 
     setTimesRun(0);
     setCurrentFlag(data.flags[0].notification.toString());
     setNextFlag(data.flags[1].notification.toString());
@@ -66,6 +72,11 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
     setTime((prevTime) => prevTime + 1); // Reset key to apply new duration
   };
 
+// 
+//   
+// displaying the time in the correct format
+// 
+//   
   const formatTime = (remainingTime: number) => {
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
@@ -85,6 +96,11 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
     );
   };
 
+// 
+// 
+// handling the notifications, updating of the timer and when the timer is completed
+// 
+//
   const notificationCountdown = (serieCode : number, remainingTime: number, heisen: number) =>{
     //  check if the remaing time is 60 50 40 30 20 10 0 seconds
 
@@ -112,12 +128,12 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 
         //voor de procedure vlag heisen
         case 1:
-          notificationCountdown(3, remainingTime, 1);
+          notificationCountdown(data.flagSerieCode + 3, remainingTime, 1);
           break;
 
           //voor strijken procedure vlag
         case 2:
-          notificationCountdown(3, remainingTime, 0);
+          notificationCountdown(data.flagSerieCode + 3, remainingTime, 0);
           break;
 
           //start van race
@@ -131,6 +147,11 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   }
 
 
+
+
+
+
+
   const handleComplete = () => {
     setTimesRun((prev) => prev +1);
     
@@ -138,9 +159,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       let currentFlag, duration, nextFlag;
 
 
-      // check if there is a flag available
-      // 
-      // 
+      //  update the "now" text
       if(data.flags[timesRun+1] != undefined){
         currentFlag = data.flags[timesRun+1].notification.toString();
         appendToCSV(data.flags[timesRun].notification.toString(), "1");   // Write flag data to csv file (csvWriting)
@@ -151,6 +170,8 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
         duration=0;
       }
       
+
+      // updating the "next" text
       if (data.flags[timesRun+2] != undefined){
         nextFlag = data.flags[timesRun+2].notification.toString();
       }else{
@@ -179,8 +200,8 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   return (
     <Card style={styles.container}>
       <Card.Content>
-        <Text style={styles.labelText}>Now: {currentFlag}</Text>
-        <Text style={styles.flagText}>Next: {nextFlag}</Text>
+        <Text style={styles.labelText}>Nu: {currentFlag}</Text>
+        <Text style={styles.flagText}>Volgende: {nextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}
