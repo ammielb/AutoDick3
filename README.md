@@ -19,56 +19,67 @@ https://www.youtube.com/watch?v=3j9DcRCxrFg
 ```
 
 ## Ble CODES
-
+De Ble codes worden aangegeven doormiddel van 3 of 4 cijferige getallen.\
+Bijvoorbeeld: 2501\
+Het eerste getal weergeeft de vlag in dit geval dus de 2 welke de klassenvlag representeert.\
+Het middelstegetal of getallen weergeven het aantal seconden wat nog op de timer staat in dit geval dus nog 50 seconden.\
+Het laatste getal weergeeft de actie 1 betekent hijsen 0 betekend strijken.\
 
 ### 00 Series: Toeter
 - **01**: 1 kort  
-- **02**: 1 lang  
+- **02**: 1 lang    
 
-### 10 Series: Oranjevlag
-- **11**: 30 seconden tot hijsen  
-- **12**: 10 seconden tot hijsen  
-- **13**: 5 seconden countdown hijsen  
-- **14**: 30 seconden tot strijken  
-- **15**: 10 seconden tot strijken  
-- **16**: 5 seconden countdown strijken  
+### 2 Series: Klassevlag
+- **2301**: 30 seconden tot hijsen  
+- **2301**: 10 seconden tot hijsen  
+- **251**: 5 seconden countdown hijsen  
+- **2300**: 30 seconden tot strijken  
+- **2100**: 10 seconden tot strijken  
+- **251**: 5 seconden countdown strijken  
 
-### 20 Series: Klassevlag
-- **21**: 30 seconden tot hijsen  
-- **22**: 10 seconden tot hijsen  
-- **23**: 5 seconden countdown hijsen  
-- **24**: 30 seconden tot strijken  
-- **25**: 10 seconden tot strijken  
-- **26**: 5 seconden countdown strijken  
+### 4 Series: Uniformvlag
+- **4301**: 30 seconden tot hijsen  
+- **4101**: 10 seconden tot hijsen  
+- **451**: 5 seconden countdown hijsen  
+- **4300**: 30 seconden tot strijken  
+- **4100**: 10 seconden tot strijken  
+- **450**: 5 seconden countdown strijken
 
-### 30 Series: Procedurevlag
-- **31**: 30 seconden tot hijsen  
-- **32**: 10 seconden tot hijsen  
-- **33**: 5 seconden countdown hijsen  
-- **34**: 30 seconden tot strijken  
-- **35**: 10 seconden tot strijken  
-- **36**: 5 seconden countdown strijken  
+### 5 Series: Zwartevlag
+- **5301**: 30 seconden tot hijsen
+- **5201**: 20 seconden tot hijsen
+- **5101**: 10 seconden tot hijsen
+- **5300**: 30 seconden tot strijken
+- **5200**: 20 seconden tot strijken
+- **5100**: 10 seconden tot strijken
 
+### 6 Series: Papavlag
+- **6301**: 30 seconden tot hijsen
+- **6201**: 20 seconden tot hijsen
+- **6101**: 10 seconden tot hijsen
+- **6300**: 30 seconden tot strijken
+- **6200**: 20 seconden tot strijken
+- **6100**: 10 seconden tot strijken
 
 ## SD card sounds 
 
 Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere volgorde waar nog naar gekeken moet worden.
 
-    01. 30 seconden tot heisen uniformvlag
-    02. 10 seconden tot heisen uniformvlag
+    01. 30 seconden tot hijsen uniformvlag
+    02. 10 seconden tot hijsen uniformvlag
     03. heisen uniformvlag
     04. 30 seconden tot strijken uniformvlag
     05. 10 seconden tot strijken uniformvlag
     06. strijken uniformvlag
     07. 30 seconden tot strijken zwartevlag
-    08. 30 seconden tot heisen klassenvlag
-    09. 10 seconden tot heisen klassenvlag
+    08. 30 seconden tot hijsen klassenvlag
+    09. 10 seconden tot hijsen klassenvlag
     10. heisen klassenvlag
-    11. 30 seconden tot strijken klassenvlag
-    12. 10 seconden tot strijken klassenvlag
+    11. 30 seconden tot hijsen klassenvlag
+    12. 10 seconden tot hijsen klassenvlag
     13. strijken klassenvlag
-    14. 30 seconden tot heisen papavlag
-    15. 10 seconden tot heisen papavlag
+    14. 30 seconden tot hijsen papavlag
+    15. 10 seconden tot hijsen papavlag
     16. heisen papavlag
     17. 30 seconden tot strijken papavlag
     18. 10 seconden tot strijken papavlag
@@ -84,7 +95,7 @@ Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere
     28. oranje vlag strijken
     29. 30 seconden tot strijken oranjevlag 
     30. 10 seconden tot strijken oranjevlag
-    31. 30 seconden tot heisen zwartevlag
-    32. 10 seconden tot heisen zwartevlag
-    33. 10 seconden tot heisen oranjevlag
-    34. 30 seconden tot heisen oranjevlag
+    31. 30 seconden tot hijsen zwartevlag
+    32. 10 seconden tot hijsen zwartevlag
+    33. 10 seconden tot hijsen oranjevlag
+    34. 30 seconden tot hijsen oranjevlag
