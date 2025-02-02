@@ -45,6 +45,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 //   
 //
   const startTimer = () => {
+    appendToCSV("\n Start nieuwe race\n", "1");    // Write flag data to csv file (csvWriting)
     setIsPlaying(true);
   };
 
@@ -54,7 +55,6 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 
   const resetTimer = () => {
     setIsPlaying(false);
-    appendToCSV("\n Start nieuwe race\n", "1");    // Write flag data to csv file (csvWriting)
     setTime((prevTime) => prevTime + 1); // Update key to reset timer
     setDuration(data.flags[0].time + 1); 
     setTimesRun(0);
@@ -128,12 +128,12 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 
         //voor de procedure vlag heisen
         case 1:
-          notificationCountdown(data.flagSerieCode + 3, remainingTime, 1);
+          notificationCountdown(data.flagSerieCode + 4, remainingTime, 1);
           break;
 
           //voor strijken procedure vlag
         case 2:
-          notificationCountdown(data.flagSerieCode + 3, remainingTime, 0);
+          notificationCountdown(data.flagSerieCode + 4, remainingTime, 0);
           break;
 
           //start van race
@@ -200,8 +200,8 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
   return (
     <Card style={styles.container}>
       <Card.Content>
-        <Text style={styles.labelText}>Nu: {currentFlag}</Text>
-        <Text style={styles.flagText}>Volgende: {nextFlag}</Text>
+        <Text style={styles.labelText}>Na huidige timer: {currentFlag}</Text>
+        <Text style={styles.flagText}>Daarna: {nextFlag}</Text>
         <CountdownCircleTimer
           key={time} // Key changes reset the timer
           duration={duration}
@@ -222,13 +222,6 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
           <Button title="Pause" onPress={pauseTimer} />
           <Button title="Add 5 min" onPress={add5min} />
           <Button title="reset" onPress={resetTimer} />
-          <Button title="testing" onPress={()=>
-            {
-              try {
-                notificationCountdown(2, 30 , 1);
-              }catch(e){}
-            }
-          } />
         </View>
       </Card.Actions>
     </Card>

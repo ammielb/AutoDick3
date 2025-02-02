@@ -57,7 +57,7 @@ const preset2: JsonData = {
     {notification: 'klassen vlag hijsen',time: 60},
     {notification: 'Uniform vlag hijsen',time: 60},
     {notification: 'Uniform vlag strijken',time: 60},
-    {notification: 'Klassen vlag strijken' ,time: 1},
+    {notification: 'Klassen vlag strijken' ,time: 60},
   ],
   start: 'start'
 };
@@ -73,7 +73,7 @@ export default function HomeScreen() {
   const [currentPreset, setCurrentPreset] = useState<JsonData>(preset1);
   const [isDeviceTabVisible, setIsDeviceTabVisible] = useState<boolean>(false);
 
-  const flagTable = ['Geen vlag geselecteerd','Uniform', 'Zwart', 'Papa'];
+  const flagTable = ['Uniform', 'Zwart', 'Papa'];
 
   // Destructure values from useBLE and define types explicitly
   const {
@@ -215,10 +215,11 @@ export default function HomeScreen() {
               <Text>5: {preset1.flags[0].notification.toString()}.</Text>
               <Text>   Tijd tot straf vlag {preset1.flags[0].time / 60} minuten.</Text>
               <Text>{"\n"}</Text>
+              <Text>4: { flagPreset1 + " hijsen"}.</Text>
               <Text>   Tijd tot straf vlag omlaag:</Text> 
               <Text>{preset1.flags[0].time / 60} minuten.</Text> 
               <Text>{"\n"}</Text>
-              <Text>1: {preset1.flags[2].notification.toString()}.</Text>
+              <Text>1: {flagPreset1 + " strijken"}.</Text>
               <Text>   Tijd tot start: {preset1.flags[0].time / 60} minuut.</Text>
               <Text>{"\n"}</Text>
               <Text>0: {preset1.flags[3].notification.toString()}.</Text>
@@ -269,14 +270,14 @@ export default function HomeScreen() {
         <Card.Content>
           <View style={styles.row}>
             <View style={styles.column}>
-              <Text>4: {preset2.flags[0].notification.toString()}.</Text>
+              <Text>3: {preset2.flags[0].notification.toString()}.</Text>
               <Text>   Tijd tot straf vlag {preset2.flags[0].time / 60} minuten.</Text>
               <Text>{"\n"}</Text>
-              <Text>3: {preset2.flags[1].notification.toString()}.</Text>
+              <Text>2: {flagPreset2 + " hijsen"}.</Text>
               <Text>   Tijd tot straf vlag omlaag:</Text> 
               <Text>{preset2.flags[0].time / 60} minuten.</Text> 
               <Text>{"\n"}</Text>
-              <Text>1: {preset2.flags[2].notification.toString()}.</Text>
+              <Text>1: {flagPreset2 + " strijken"}.</Text>
               <Text>   Tijd tot start: {preset2.flags[0].time / 60} minuut.</Text>
               <Text>{"\n"}</Text>
               <Text>0: {preset2.flags[3].notification.toString()}.</Text>
