@@ -20,7 +20,6 @@ import {
   Card,
   RadioButton
  } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -102,9 +101,6 @@ export default function HomeScreen() {
     await scanForDevices();
     setIsDeviceTabVisible(true);
   };
-
-
-
 
   // Change preset function
   const changeTimer = () => {
