@@ -45,7 +45,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 //   
 //
   const startTimer = () => {
-    appendToCSV("\n Start nieuwe race\n", "1");    // Write flag data to csv file (csvWriting)
+    appendToCSV("\n Start nieuwe race\n", "1");    // Write line to csv to indecate an new race starting
     setIsPlaying(true);
   };
 
@@ -102,7 +102,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
 // 
 //
   const notificationCountdown = (serieCode : number, remainingTime: number, heisen: number) =>{
-    //  check if the remaing time is 60 50 40 30 20 10 0 seconds
+    //  check if the remaing time is 60, 55, 50, 45, 40, 35, 30, 25, 20, 15 10 or 0 seconds
 
       if(remainingTime % 5 == 0 ){
         let transmitData = serieCode + "" + remainingTime + "" +  heisen
@@ -121,27 +121,25 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
       }
       switch(timesRun){
 
-        // voor de klassen vlag heisen
+        // for raising class flag
         case 0:
           notificationCountdown(2, remainingTime , 1);
           break;
 
-        //voor de procedure vlag heisen
+        // for raising procedure flag
         case 1:
           notificationCountdown(data.flagSerieCode + 4, remainingTime, 1);
           break;
 
-          //voor strijken procedure vlag
+        // lowering procedure flag
         case 2:
           notificationCountdown(data.flagSerieCode + 4, remainingTime, 0);
           break;
 
-          //start van race
+          //start of race
         case 3:
           notificationCountdown(2, remainingTime, 0);
           break;
-        
-        //na de klassen en voor de proceduren vlag 
       }
 
   }
@@ -216,6 +214,7 @@ const Timer = forwardRef (({data, connectedDevice}: Props, ref) => {
         </CountdownCircleTimer>
       </Card.Content>
       
+      {/* displaying buttons */}
       <Card.Actions>
         <View style={styles.buttonContainer}>
           <Button title="Start" onPress={startTimer} />

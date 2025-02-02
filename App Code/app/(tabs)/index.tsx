@@ -2,18 +2,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 
-import Timer from '@/components/Timer';
+import Timer from '@/components/Timer';   // Import Timer component
 import DeviceModal from '@/components/DeviceConnectionModal';
-import useBLE from './useBLE';
+import useBLE from './useBLE';  // Import useBLE hook
 import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Pressable,
   ScrollView
 } from 'react-native';
 import { 
-  Appbar, 
   Button, 
   Divider,
   Text,
@@ -27,16 +25,17 @@ interface flags{
   notification:String,
   time:number
 }
+// create json for presets witch are used in the timer component.
 interface JsonData{
-  name: String,
-  amountOfFlags: number;
-  flagSerieCode: number,
-  flags: flags[],
-  start:String
+  name: String,           // name of preset
+  amountOfFlags: number;  // the number of flags in the preset
+  flagSerieCode: number,  // the number used for the ble signals
+  flags: flags[],         // the flags
+  start:String            // the start component
 }
 
 
-const preset1: JsonData = {
+const preset1: JsonData = {   // preset for the 5 4 2 1 start
   name : 'preset1',
   amountOfFlags: 4,
   flagSerieCode:0,
@@ -48,7 +47,7 @@ const preset1: JsonData = {
   ],
   start: 'start'
 };
-const preset2: JsonData = {
+const preset2: JsonData = {   // preset for the 3 2 1 start
   name: 'preset2',
   amountOfFlags: 4,
   flagSerieCode:0,
@@ -106,21 +105,21 @@ export default function HomeScreen() {
   const changeTimer = () => {
     setCurrentPreset((prev) => (prev === preset1 ? preset2 : preset1));
     
-    timerRef.current.resetTimer();  // Call resetTimer function from Timer
+    timerRef.current.resetTimer();  // Call resetTimer function from Timer to correctly change the preset
     
   };
 
-  const setPreset1 = () => {
+  const setPreset1 = () => {        // the function used to change the preset to preset 1
     setCurrentPreset(preset1);
     timerRef.current.resetTimer();
   };
 
-  const setPreset2 = () => {
+  const setPreset2 = () => {        // the function used to change the preset to preset 2
     setCurrentPreset(preset2);
     timerRef.current.resetTimer();
   };
 
-  useEffect(() => {
+  useEffect(() => {                 // function to get current time
     const interval = setInterval(() => {
       setCurrTime(new Date().toLocaleTimeString());
     }, 1000);
@@ -158,7 +157,6 @@ export default function HomeScreen() {
       <Timer ref={timerRef}  data={currentPreset} connectedDevice={connectedDevice}/>  
 
       <Divider/>
-      {/*  toeter BZZZZZ */}
       {/* if there is a BL devices connected display action keys for BL  */}
         {connectedDevice  && (
           <View style={{display:'flex', justifyContent:'space-between' ,flexDirection:'row'}} >
@@ -231,6 +229,8 @@ export default function HomeScreen() {
                   preset1.flags[2].notification = flagPreset1 + " strijken";
                 }} value={flagPreset1}
                 >
+
+                  {/* The options to select procedure flag */}
                 <View style={styles.RadioButtonItem}>
                   <RadioButton
                     value="Uniform"
@@ -281,6 +281,7 @@ export default function HomeScreen() {
             </View>
             <View>
               <Text>{"Selecteer een straf vlag"}</Text>
+                {/* The options to select procedure flag */}
               <RadioButton.Group onValueChange={newValue => {
                   setFlagPreset2(newValue)
                   preset2.flagSerieCode = flagTable.indexOf(flagPreset2);
@@ -354,7 +355,7 @@ export default function HomeScreen() {
 }
 
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  // The styling
 
   container: {
     flex: 1,

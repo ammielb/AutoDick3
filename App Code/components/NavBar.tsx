@@ -18,9 +18,7 @@ export function NavBar() {
     return () => clearInterval(interval); // cleanup interval on component unmount
   }, []);
 
-  // Check if we are on the "Home" screen (index) or "Presets" screen
-  // const isHomeScreen = segments.includes('index');
-  // const isPresetsScreen = segments.indexOf('Presets');
+  // Check if we are on the "Home" screen (index) 
 
   const displayNavButtons = () =>{
     if(segments[1] == undefined  ){
@@ -44,12 +42,6 @@ export function NavBar() {
       <Appbar.Content titleStyle={{ textAlign: 'center' }} title="AutoDick" />
 
         {displayNavButtons()}
-        {/*  */}
-
-
-
-
-
     </Appbar.Header>
   );
 }
