@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "AutoDick3",
-    "owner": "autodick",
+    "owner": "autodick_the-relevant",
     "slug": "autodick4",
     "version": "1.0.0",
     "runtimeVersion": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -38,7 +38,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ebaab792-9884-4556-aaa7-00a523a6b243"
+        "projectId": "5de6e704-b77d-4091-bd25-12df7b85d69d"
       },
       "router": {
         "origin": false
