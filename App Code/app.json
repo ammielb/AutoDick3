@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "AutoDick3",
+    "owner": "autodick_the-relevant",
+    "slug": "autodick4",
+    "version": "1.0.0",
+    "runtimeVersion": "1.0.0",
+    "orientation": "portrait",
+    "icon": "assets/images/logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "icon": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.AutoDick4.autodick3"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/logo.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5de6e704-b77d-4091-bd25-12df7b85d69d"
+      },
+      "router": {
+        "origin": false
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cb3a2bd3-9c67-468c-a4aa-aae66a5c07e6"
+    }
+  }
+}
