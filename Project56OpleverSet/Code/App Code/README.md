@@ -1,3 +1,14 @@
+# App Code
+
+## Waar welke code:
+De benodigde codes voor het builden van de app zijn hier ook weer onder verschillende mapjes verdeeld.
+
+Alle visuele pagina's zitten in de map: [./app/(tabs)](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/app/(tabs)). Hier bevind zich ook de code voor het loggen van alle vlaggen.
+
+In de map [Components](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/components) kan je de [Timer functions](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/Timer.tsx), de [BLE functions](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/DeviceConnectionModal.tsx) en de styling voor de [navbar](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/NavBar.tsx).
+
+In de map [assets](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/assets) kunnen de gebruikte fonts en images gevonden worden.
+
 
 ## If you want to change the admin account.
 1. In app.json and eas.json. change the owner to the new owner account.
@@ -101,14 +112,7 @@ Op de SD kaart staan de files op volgorde maar voor het afspelen geld een andere
     34. 30 seconden tot hijsen oranjevlag
 
 
-## Waar welke code:
-De benodigde codes voor het builden van de app zijn hier ook weer onder verschillende mapjes verdeeld.
 
-Alle visuele pagina's zitten in de map: [./app/(tabs)](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/app/(tabs)). Hier bevind zich ook de code voor het loggen van alle vlaggen.
-
-In de map [Components](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/components) kan je de [Timer functions](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/Timer.tsx), de [BLE functions](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/DeviceConnectionModal.tsx) en de styling voor de [navbar](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Code/App%20Code/components/NavBar.tsx).
-
-In de map [assets](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Code/App%20Code/assets) kunnen de gebruikte fonts en images gevonden worden.
 
 ## changelog
 | Wie | Wijzegingen| Wanneer | 
