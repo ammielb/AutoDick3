@@ -18,6 +18,16 @@ Onder het mapje [Box Code](https://github.com/ammielb/AutoDick3/tree/master/Proj
 ## Powerpoints
 In de map [Powerpoints](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Powerpoints) bevinden zich alle powerpoints van dit project. Dit zijn: 7 sprints, de 50% presentatie en de powerpoint gebruikt op de eindmarkt.
 
+## Images
+Onder het mapje [Images](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Images) kan je de visualisatie van een zeilwedstrijd vinden. Ook staat hier het logo van onze app.
+
+## Schema's
+Onder het mapje [Schemas](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Schemas) Kunne alle gemaakte schema's gevonden. Hieronder vallen:
+- [Architectuur schema](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Schemas/AutoDick4ArchitectuurSchema.png)
+- [Wireframe 1 & 2](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Schemas/Wireframes)
+- [Ontwerpen plaat](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Schemas/Plaat%20Ontwerpen)
+- [Elektrisch schema 1 t/m 4](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Schemas/Electrische%20schemas)
+
 ## changelog
 | Wie | Wijzegingen| Wanneer | 
 |-----|--------|--|
