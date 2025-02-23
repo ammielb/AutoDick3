@@ -34,7 +34,7 @@ De Ble codes worden aangegeven doormiddel van 3 of 4 cijferige getallen.\
 Bijvoorbeeld: 2501\
 Het eerste getal weergeeft de vlag in dit geval dus de 2 welke de klassenvlag representeert.\
 Het middelstegetal of getallen weergeven het aantal seconden wat nog op de timer staat in dit geval dus nog 50 seconden.\
-Het laatste getal weergeeft de actie 1 betekent hijsen 0 betekend strijken.\
+Het laatste getal weergeeft de actie 1 betekent hijsen 0 betekend strijken.
 
 ### 00 Series: Toeter
 - **01**: 1 kort  
