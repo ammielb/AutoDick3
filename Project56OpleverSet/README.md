@@ -28,7 +28,20 @@ Onder het mapje [Schemas](https://github.com/ammielb/AutoDick3/tree/master/Proje
 - [Ontwerpen plaat](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Schemas/Plaat%20Ontwerpen)
 - [Elektrisch schema 1 t/m 4](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Schemas/Electrische%20schemas)
 
+## Verslagen
+Onder het mapje [Verslagen](https://github.com/ammielb/AutoDick3/tree/master/Project56OpleverSet/Verslagen) kunnen alle gemaakte verslagen/documenten van dit project gevonden worden. Hieronder vallen:
+
+- [Het context verslag](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Context.pdf)
+- [De gebruikte flyer op de eindmarkt](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Flyer.pdf)
+- [Het gebruikersonderzoek](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4GebruikersOnderzoek.pdf)
+- [Het literatuuronderzoek](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4LiteratuurOnderzoekAccu.pdf)
+- [De requirements](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Requirements.pdf)
+- [De backlog](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Backlog.xlsx)
+- [De risicoinventarisatie](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4RisicoInventarisatie.pdf)
+- [Het testplan met rapport](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Testplan%26Rapport.pdf)
+
 ## changelog
 | Wie | Wijzegingen| Wanneer | 
 |-----|--------|--|
 |Ivo Bruinsma| Aanmaken bestand |21-02-2025|
+|Ivo Bruinsma | Toevoegen "Images", "Schema's" & "Verslagen" | 23-02-2025 |
