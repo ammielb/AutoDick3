@@ -1,6 +1,6 @@
 # Opleverset automatisering zeilwedstrijden.
 
-Hier vind je de oplever set van ons project 5/6 automatisering van zeilwedstrijden.
+Hier vind je de oplever set van ons project 5/6 automatisering seinen van zeilwedstrijden.
 
 ## Inleiding
 In dit project hebben wij een app gemaakt om de start van een zeilwedstrijd te versimpellen. In deze oplever set vind je alle documentatie van dit project.
@@ -41,7 +41,7 @@ Onder het mapje [Verslagen](https://github.com/ammielb/AutoDick3/tree/master/Pro
 - [Het testplan met rapport](https://github.com/ammielb/AutoDick3/blob/master/Project56OpleverSet/Verslagen/AutoDick4Testplan%26Rapport.pdf)
 
 ## changelog
-| Wie | Wijzegingen| Wanneer | 
-|-----|--------|--|
-|Ivo Bruinsma| Aanmaken bestand |21-02-2025|
-|Ivo Bruinsma | Toevoegen "Images", "Schema's" & "Verslagen" | 23-02-2025 |
+| Wie        | Wijzegingen                                  | Wanneer   | 
+|------------|----------------------------------------------|-----------|
+|Ivo Bruinsma| Aanmaken bestand                             |21-02-2025 |
+|Ivo Bruinsma| Toevoegen "Images", "Schema's" & "Verslagen" |23-02-2025 |
